@@ -1,0 +1,61 @@
+---
+title: "Single Step Genomic BLUP"
+subtitle: "A Project Description"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+# Erklärung
+Dieses Dokument basiert auf den zwei Offerten (Mitte 2017 und 24.01.2018), welche von Christian Stricker eingereicht wurden. Hier sind Reaktionen, Begründungen und Rückmeldungen auf diese Offerten enthalten, welche dann zu einem gemeinsamen Projekt im Bereich ssGBLUP führen sollen.
+
+
+# Einführung
+
+
+# Ausgangslage
+Aktuell werden in der Schweizer Milchviehzucht genomische Zuchtwerte mit Markereffektmodellen und einer Bayesschen Regression (A, B, oder C und dessen Modifikationen) geschätzt. Die genomischen Zuchtwerte werden mit traditionellen Zuchtwerten zu einem Index (GOZW) kombiniert^[siehe Brochure zur Genomischen Selektion]. Für nicht-typisierte Tiere gibt es keinen genomischen Zuchtwert sondern nur einen traditionellen Zuchtwert. Für typisierte Tiere gibt es einen genomischen Zuchtwert und einen traditionellen Zuchtwert, welche zu einem GOZW kombiniert werden.
+
+Bei single-step GBLUP bekommen sowohl typisierte als auch nicht-typisierte Tiere einen genomischen Zuchtwert. Dazu braucht es eine Verbindung zwischen Tieren mit und ohne Genotypinformationen. Dies geschieht über die genomische Verwandtschaftsmatrix. In den meisten Fällen wird ssGBLUP mit einem Tiereffektmodell parametrisiert. Das heisst, dass die Gesamtheit der genomischen Effekte für jedes Tier mit einem zufälligen Effekt modelliert. Dies wird problematisch, wenn die Anzahl der typisierten Tieren grösser ist als die Dichte der SNP-Karte. Alternativ kann ssGBLUP auch mit einem Marker-Effekt-Modell (MEM) parametrisiert werden.
+
+
+# Rückmeldungen
+Gemäss Jürg und Urs^[persönliche Besprechung am 29.01.2018, am 31.01.2018 und am 05.02.2018] sind die folgenden Punkte zu berücksichtigen:
+
+* Varianten mit nur nationalen Informationen sind nicht relevant für uns
+* Verhinderung der Doppelberücksichtigung kann mit dem Ansatz aus [@Vandenplas2017] umgesetzt werden. 
+* Als Merkmale kommen Fruchtbarkeit und Milch (kg, Fett, Eiweiss) in Frage
+
+
+```{r bib, include=FALSE}
+### # if skeleton.bib already exists, we do not have to recreate it
+s_bib_file <- "skeleton.bib"
+s_bib_path <- file.path(here::here(), "ProjectDescription", "bib")
+if (!fs::file_exists(path = s_bib_file)){
+  vec_bib_files <- fs::dir_ls(s_bib_path)
+  for (f in vec_bib_files){
+    con_bib <- file(description = f)
+    b <- readLines(con = con_bib)
+    cat(b, sep = "\n", file = s_bib_file, append = TRUE)
+    close(con_bib)
+  }
+    
+}
+
+```

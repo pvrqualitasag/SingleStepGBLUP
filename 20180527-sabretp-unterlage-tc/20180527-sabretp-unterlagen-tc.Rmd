@@ -1,0 +1,27 @@
+---
+title: "Using International Information In National Single Step Genomic BLUP In Swiss Dairy Cattle"
+author: Christian Stricker and Peter von Rohr
+date: "2018-05-28"
+output: 
+  pdf_document:
+    pandoc_args: [
+      "-V", "classoption=twocolumn"
+    ]
+header-includes:
+- \setlength{\columnsep}{18pt}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+In Swiss dairy cattle breeding, genomic breeding values are estimated using marker-effect models (MEM) and a Bayesian Regression approach (Bayes $A - C$ and $C_{\pi}$). MEM do not provide breeding value estimates for animals that are not genotyped. Estimated genomic breeding values are combined with traditional BLUP-based breeding values via an index procedure. Genomic breeding values of genotyped individuals do not have any influence on animals without SNP-information. The precision of a genomic evaluation is combined with accuracies of traditional BLUP-based breeding values. The combination of genomic breeding values and traditional BLUP-based breeding values as well as the combination of the accuracies are based on long-term experiences and are difficult to formalise. 
+
+In dairy cattle breeding programs SNP-information is exchanged between different countries, but phenotypic information is not. Hence any internationally used sire has only phenotypic information from offspring in a given country available. Therefore MEM evaluations has to be based on de-regressed international breeding values. 
+
+
+### Single Step GBLUP
+In dairy cattle, genomic BLUP (GBLUP)
+
+
