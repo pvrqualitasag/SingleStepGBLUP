@@ -9,6 +9,9 @@ output:
     ]
 header-includes:
 - \setlength{\columnsep}{18pt}
+bibliography: skeleton.bib
+biblio-style: apalike
+link-citations: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -16,12 +19,60 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
-In Swiss dairy cattle breeding, genomic breeding values are estimated using marker-effect models (MEM) and a Bayesian Regression approach (Bayes $A - C$ and $C_{\pi}$). MEM do not provide breeding value estimates for animals that are not genotyped. Estimated genomic breeding values are combined with traditional BLUP-based breeding values via an index procedure. Genomic breeding values of genotyped individuals do not have any influence on animals without SNP-information. The precision of a genomic evaluation is combined with accuracies of traditional BLUP-based breeding values. The combination of genomic breeding values and traditional BLUP-based breeding values as well as the combination of the accuracies are based on long-term experiences and are difficult to formalise. 
+In Swiss dairy cattle breeding, genomic breeding values are estimated using marker-effect models (MEM) and a Bayesian Regression approach (Bayes $A - C$ and $C_{\pi}$ [@Gianola2013]). MEM do not provide genomic breeding value estimates for animals that are not genotyped. Estimated genomic breeding values are combined with traditional BLUP-based breeding values via an index procedure. Genomic breeding values of genotyped individuals do not have any influence on animals without SNP-information. The precision of a genomic evaluation is combined with accuracies of traditional BLUP-based breeding values. The combination of genomic breeding values and traditional BLUP-based breeding values as well as the combination of the accuracies are based on long-term experiences and are difficult to formalise. 
 
 In dairy cattle breeding programs SNP-information is exchanged between different countries, but phenotypic information is not. Hence any internationally used sire has only phenotypic information from offspring in a given country available. Therefore MEM evaluations has to be based on de-regressed international breeding values. 
 
 
-### Single Step GBLUP
-In dairy cattle, genomic BLUP (GBLUP)
+## Single Step GBLUP
+In dairy cattle, genomic BLUP (GBLUP) is a widely used procedure to estimate genomic breeding values. GBLUP can be parametrised as MEM or as so-called breeding-value-model (BVM) where the sum of all SNP-effects per animal is modelled as a single random component. [@LAM2009] showed a single-step GBLUP approach which directly combines information of genotyped animals with animals that do not have any SNP-information. The BVM single-step GBLUP model differs from the traditional BLUP animal model only in the variance-covariance matrix of the random effects. The variance-covariance matrix of the random effects for the traditional animal model is proportional to the additive-genetic relationship matrix ($A$). For the BVM single-step GBLUP model, the variance-covariance matrix is based on the genomic relationship matrix which is often mixed with certain parts of $A$. This procedure of mixing the genomic relationship matrix with $A$ requires a lot of fine-tuning and is dependent on the trait of interest and on the SNP-allele frequencies. 
 
+
+## Combining Different Information Sources
+[@VSPG2017] showed how genomic breeding values can be estimated using single-step BVM GBLUP for populations with different sources of information. In this study, we want to evaluate different strategies for combining all available information to come up with a single-step GBLUP approach which is suitable for the situation of Swiss dairy cattle breeding populations. The different strategies are evaluated using comparisons done in two different dimensions. First we compare the currently used Bayesian MEM approach to the single-step BVM approach described by [@LAM2009] considering only national data. These two methods are shown to yield the same results (except for some Monte Carlo error) when used on the same input data which means that we have to avoid double counting of international information to get a clear comparison of the two methods. In a second step we are integrating international information into the single-step BVM evaluation.   
+
+
+## References
+```{r BibRefs, echo=FALSE}
+s_bib_file <- "skeleton.bib"
+vec_bib <- c(bibentry(
+    bibtype = "Article",
+    title = "A relationship matrix including full pedigree and genomic information",
+    author = c(as.person("A. Legarra"), as.person("I. Aguilar"), as.person("I. Misztal")),
+    journal= "Journal of Dairy Science",
+    year = 2009,
+    key = "LAM2009"),
+  bibentry(
+    bibtype = "Article",
+    author = as.person("D. Gianola"),
+    doi = "10.1534/genetics.113.151753",
+    journal = "Genetics",
+    number = 3,
+    pages = "573--596",
+    publisher = "Genetics Society of America",
+    title = "Priors in Whole-Genome Regression: The Bayesian Alphabet Returns",
+    url = "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3697965/",
+    volume = 194,
+    year = 2013,
+    key = "Gianola2013"),
+  bibentry(
+    bibtype = "Article",
+    author = c(as.person("J. Vandenplas"), 
+               as.person("M. Spehar"),
+               as.person("K. Potocnik"),
+               as.person("N. Gengler"),
+               as.person("G. Gorjanc")),
+    doi = "10.3168/jds.2016-11733",
+    journal = "Journal of Dairy Science",
+    title = "National single-step genomic method that integrates multi-national genomic information",
+    url = "http://linkinghub.elsevier.com/retrieve/pii/S0022030216308128 http://dx.doi.org/10.3168/jds.2016-11733",
+    volume = 100,
+    year = 2017,
+    number = 1,
+    pages = "465--478",
+    publisher = "Elsevier",
+    key = "VSPG2017"
+  ))
+rmddochelper::write_bib(pvec_bref = vec_bib)
+```
 
