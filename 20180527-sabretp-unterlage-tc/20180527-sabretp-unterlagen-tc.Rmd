@@ -34,6 +34,7 @@ As outlined above, the major problem in using information from foreign sires in 
 Further information will be provided on the project website at: https://charlotte-ngs.github.io/SingleStepGBLUP/.
 
 ## References
+\small
 ```{r BibRefs, echo=FALSE}
 s_bib_file <- "skeleton.bib"
 vec_bib <- c(bibentry(
