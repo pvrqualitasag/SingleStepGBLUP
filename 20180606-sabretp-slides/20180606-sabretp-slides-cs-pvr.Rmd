@@ -1,0 +1,41 @@
+---
+title: Using International Information In National Single Step Genomic BLUP In Swiss
+  Dairy Cattle
+author: "Christian Stricker and Peter von Rohr"
+date: "2018 - 06 - 06"
+output:
+  ioslides_presentation: default
+  slidy_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Current Situation
+
+In Swiss dairy cattle breeding, genomic breeding values are estimated using
+
+- marker-effect models (MEM)
+- Bayesian regression approach (Bayes $A - C$ and $C_{\pi}$) 
+- two-step procedure
+
+
+## Two-Step
+
+```{r, out.width=720}
+knitr::include_graphics(path = "png/two-step.png")
+```
+
+
+## Information Exchange
+
+In dairy breeds with gene-flow from foreign countries
+
+- Exchange of genotypes
+- Phenotypes not exchanged
+
+$\rightarrow$ MEM evaluations based on de-regressed MACE breeding values
+
+
+## Single Step GBLUP
