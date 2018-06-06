@@ -2,7 +2,7 @@
 title: Using International Information In National Single Step Genomic BLUP In Swiss
   Dairy Cattle
 author: "Christian Stricker and Peter von Rohr"
-date: "2018 - 06 - 06"
+date: "2018-06-06"
 output:
   beamer_presentation: default
   ioslides_presentation: default
@@ -11,6 +11,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+b_is_html_out <- knitr::is_html_output()
 ```
 
 ## Current Situation
@@ -24,7 +25,7 @@ In Swiss dairy cattle breeding, genomic breeding values are estimated using
 
 ## Two-Step
 
-```{r, out.width=720}
+```{r}
 knitr::include_graphics(path = "png/two-step.png")
 ```
 
@@ -49,20 +50,24 @@ $\rightarrow$ MEM evaluations based on de-regressed MACE breeding values
 
 ## Comparison
 
-```{r, out.width=600}
+```{r, eval=!b_is_html_out}
+knitr::include_graphics(path = "png/SSGBLUP.png")
+```
+
+```{r, eval=b_is_html_out, out.width=600}
 knitr::include_graphics(path = "png/SSGBLUP.png")
 ```
 
 
 ## Combining Information Sources
 
-```{r, out.width=720}
+```{r}
 knitr::include_graphics(path = "png/combine_info.png")
 ```
 
 
 ## Proposed Approach
 
-```{r, out.width=720}
+```{r}
 knitr::include_graphics(path = "png/proposed_approach.png")
 ```
