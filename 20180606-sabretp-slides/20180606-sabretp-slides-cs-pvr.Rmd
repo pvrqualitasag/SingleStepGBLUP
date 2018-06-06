@@ -4,8 +4,8 @@ title: Using International Information In National Single Step Genomic BLUP In S
 author: "Christian Stricker and Peter von Rohr"
 date: "2018-06-06"
 output:
-  beamer_presentation: default
   ioslides_presentation: default
+  beamer_presentation: default
   slidy_presentation: default
 ---
 
@@ -45,7 +45,7 @@ $\rightarrow$ MEM evaluations based on de-regressed MACE breeding values
 * In general BLUP is widely accepted in animal breeding
 * Genomic BLUP (GBLUP) can be parametrized as MEM and as breeding-value model (BVM)
 * In BVM the sum of SNP-effects is modelled as random component $u$
-* Legarra et al. (2009) showed single-step GBLUP approach
+* Legarra et al. (2009) and Christensen and Lund (2010) showed single-step GBLUP approach
 
 
 ## Comparison
@@ -71,3 +71,10 @@ knitr::include_graphics(path = "png/combine_info.png")
 ```{r}
 knitr::include_graphics(path = "png/proposed_approach.png")
 ```
+
+
+## The End
+
+* Website: https://charlotte-ngs.github.io/SingleStepGBLUP/
+* Questions?
+* Thank you for your attention

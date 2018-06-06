@@ -25,7 +25,7 @@ In dairy cattle breeding programs genotypic information is exchanged between dif
 
 
 ## Single Step GBLUP
-In dairy cattle, genomic BLUP (GBLUP) is a widely used procedure to estimate genomic breeding values. GBLUP can be parametrised as MEM or as breeding-value-model (BVM) where the sum of all SNP-effects per animal is modeled as a single random component. @LAM2009 showed a single-step GBLUP approach which directly combines information of genotyped animals with animals that do not have any SNP-information. The BVM single-step GBLUP model differs from the traditional BLUP animal model only in the variance-covariance matrix of the random effects 'animal'. For the BVM single-step GBLUP model, the additive genetic relationship matrix used to model the covariance between genotyped relatives is replaced by a genomic relationship matrix. This genomic relationship matrix is often blended with additive genetic relationships. For the non-genotyped animals covariances are linearly estimated based on the additive relationship matrix and the genotyped relatives. The final total variance-covariance matrix again requires a lot of fine-tuning depending on the trait of interest and on the SNP-allele frequencies in the base population (which are unknown). 
+In dairy cattle, genomic BLUP (GBLUP) is a widely used procedure to estimate genomic breeding values. GBLUP can be parametrised as MEM or as breeding-value-model (BVM) where the sum of all SNP-effects per animal is modeled as a single random component. @LAM2009  and @CL2010 showed a single-step GBLUP approach which directly combines information of genotyped animals with animals that do not have any SNP-information. The BVM single-step GBLUP model differs from the traditional BLUP animal model only in the variance-covariance matrix of the random effects 'animal'. For the BVM single-step GBLUP model, the additive genetic relationship matrix used to model the covariance between genotyped relatives is replaced by a genomic relationship matrix. This genomic relationship matrix is often blended with additive genetic relationships. For the non-genotyped animals covariances are linearly estimated based on the additive relationship matrix and the genotyped relatives. The final total variance-covariance matrix again requires a lot of fine-tuning depending on the trait of interest and on the SNP-allele frequencies in the base population (which are unknown). 
 
 
 ## Combining Different Information Sources
@@ -34,7 +34,7 @@ As outlined above, the major problem in using information from foreign sires in 
 Further information will be provided on the project website at: https://charlotte-ngs.github.io/SingleStepGBLUP/.
 
 ## References
-\small
+\tiny
 ```{r BibRefs, echo=FALSE}
 s_bib_file <- "skeleton.bib"
 vec_bib <- c(bibentry(
@@ -44,6 +44,16 @@ vec_bib <- c(bibentry(
     journal= "Journal of Dairy Science",
     year = 2009,
     key = "LAM2009"),
+  bibentry(
+    bibtype = "Article",
+    title = "Genomic prediction when some animals are not genotyped",
+    author = c(as.person("O. F. Christensen"), as.person("M. S. Lund")),
+    journal = "Genetics  Selection  Evolution",
+    year = 2010,
+    volume = 42,
+    pages = "2",
+    key = "CL2010"
+  ),  
   bibentry(
     bibtype = "Article",
     author = as.person("D. Gianola"),
