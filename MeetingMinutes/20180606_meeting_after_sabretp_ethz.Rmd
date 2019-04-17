@@ -1,0 +1,32 @@
+---
+title: "Meeting Minutes 20180606"
+author: "Peter von Rohr"
+date: "6/6/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Meeting
+After SabreTP workshop on 06.06.2018, Chris showed me his data preparation program
+
+
+## Background Information
+After previous meeting, I sent a small test example dataset and a pedigree to Chris. The data contained two traits with a certain number of explanatory variables. The example dataset was extracted from the BVCH-LBE routine breeding value estimation.
+
+
+## Topics presented by Chris
+* Adaptation of data preparation program `verifyData` 
+* Input parameter file can be used to drive data preparation
+* Result of `verifyData` are Mix99 input files, except for CLIM-parameter file
+* Validation program to compare results of different routine evaluations
+
+## Tasks
+* (CS) Completion of documentation
+* (CS) finish validation program such it can handle old formats
+* (PvR) Send header of results of old routine evaluation
+* (PvR) Try to replicate data preparation and BV-estimation with larger dataset 
+
