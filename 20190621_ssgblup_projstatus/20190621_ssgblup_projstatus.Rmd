@@ -1,0 +1,52 @@
+---
+title: "Single Step Genomic BLUP"
+subtitle: "Current Project Status"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: bibliography.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+# Mendeley Reference Manager setup
+mrmt <- rmddochelper::MendeleyExportToolR6$new()
+mrmt$set_this_rmd_file(ps_this_rmd_file = ifelse(rstudioapi::isAvailable(),
+                                                 rstudioapi::getSourceEditorContext()$path,
+                                                 rprojroot::thisfile()))
+```
+
+# Ziel
+Das bestehende Zwei-Schritt-Verfahren (two-step) für die Schätzung genomischer Zuchtwerte soll mit einem Ein-Schritt-Verfahren (single-step) basierend auf einem genomischen BLUP-Ansatz (SSGBLUP) verglichen^[Der Vergleich wird über zwei Dimesionen geführt werden. Einerseits werden die unterschiedlichen Methoden verglichen. In einer zweiten Dimension soll der Einfluss des Einbezugs von internationalen Informationen untersucht werden.] werden.
+
+
+# Status
+
+
+
+# Hintergrund
+Wie in `r mrmt$add("Edel2019")` erwähnt, ist die Lernstichprobe aufgrund von Stieren nur noch bedingt ausbaubar. Es werden schon alle Stiere genotypisiert. Die Anzahl der Jungstiere ist rückläufig und die Jungstiere sind schon vorselektiert. Dies führt zu einer Überalterung der Lernstichprobe und somit zu einer Entfernung der Lernstichprobe von der aktuellen Population. Als Ausweg für dieses Problem wird das Hinzufügen von Kühen zur Lernstichprobe vorgeschlagen. In einer Simulationsstudie von `r mrmt$add("Plieschke2018")` wurden die Ergänzung der Lernstichprobe durch Genotypen von weiblichen Tieren in verschiedenen Szenarien untersucht. Alternative zur Ergänzung der Lernstichprobe durch Genotypen von weiblichen Tieren, ist auch eine Umstellung auf ein Ein-Schritt-Verfahren denkbar. Im Artikel von `r mrmt$add("Schwarzenbacher2019a")` wurden die beiden Verfahren (Ein- und Zwei-Schritt) einander gegenübergestellt. Bei der Berücksichtigung von weiblichen Tieren als Kandidaten in der Lernstichprobe gilt es zu beachten, dass diese eine repräsentative Stichprobe aus der Population bilden^[Bei nur wenigen genotypisierten Kühen ist davon auszugehen, dass es sich um selektiv ausgewählte Tiere handelt. Diese Vorselektion führt zu einer Verzerrung der resultierenden Schätzwerte.].
+
+
+## Genomische Zuchtwertschätzung mit dem Zwei-Schrittverfahren
+Genotypisierte Tiere, welche nicht in der Lernstichprobe sind, werden als **Kandidaten**^[In der Regel sind das Kälber, es können aber auch Kühe sein mit mehreren abgeschlossenen Laktationen. ] bezeichnet. In Abhängigkeit der in der Auswertung der Lernstichprobe verwendeten Modellparametrisierung^[Entweder Marker-Effekt Modell oder Zuchtwert-Modell] errechnen sich im Fall eines verwendeten Marker-Effekt Modells die Genomzuchtwerte eines Kandidaten als Summen der entsprechenden geschätzten Markereffekte. Leistungsinformationen von Kandidaten tragen nur dann etwas zur Schätzung in der Lernstichprobe bei, falls diese über deregressierte Zuchtwerte berücksichtigt werden. Genomische Zuchtwerte von verschiedenen Kandidaten beeinflussen sich nicht. 
+
+Das Zwei-Schritt Verfahren zur Schätzung von genomischen Zuchtwerten hat die folgenden methodischen Schwachstellen
+
+* **Keine Berücksichtigung der genomischen Vorselektion**: Aus der Genomik gibt es keinen Informationübertrag, somit geht die traditionelle ZWS davon aus, dass genomische Jungvererber zufällige Stichproben ihrer Eltern sind. 
+* **Kein Rückfluss von Information auf nicht genotypisierte Tiere**: SNP-Genotypen von Kälber enthalten Informationen zu den Genotypen der nicht-typisierten Mütter. Diese Information könnte eingesetzt werden für ein Prozess, welcher als **Genotypen-Imputation** bezeichnet wird. Diese Information wird aber im aktuellen Zwei-Schritt-Verfahren nicht berücksichtigt.
+
+
+# Single Step
+
