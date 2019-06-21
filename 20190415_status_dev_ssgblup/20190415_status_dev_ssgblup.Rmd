@@ -1,0 +1,56 @@
+---
+title: "Current Status And Further Development in SSGBLUP"
+date: "2019-04-15"
+author: "Peter von Rohr"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::knit_hooks$set(hook_convert_odg = rmddochelper::hook_convert_odg)
+```
+
+
+## Disclaimer
+The current status of the project is described. Aligning this description with the project proposal leads to further steps to be taken in this project.
+
+
+## The Proposal
+The proposal (version from 2018-03-15) is based on the following figure.
+
+```{r projectdiagram, echo=FALSE, hook_convert_odg=TRUE, fig_path="odg"}
+#rmddochelper::use_odg_graphic(ps_path = "odg/projectdiagram.odg")
+knitr::include_graphics(path = "odg/projectdiagram.png")
+```
+
+
+The goal of the project is to compare the currently used two-step approach with different single-step methods (SSGBLUP and SSBR). The comparisons will be the basis for a decision about whether to introduce single-step methods. In the above shown figure the current situation is represented by the top right corner. The change to a single-step method would mean to get from the top right to the bottom right corner. The left column is used for quality control and to be able to test and verify the newly introduced method. 
+
+
+## Methods
+It has to be noted here that the comparison in the methods dimension is not just from two-step to single-step. But it is also a comparison between marker-effect models (MEM) and breeding-value models (BVM). This has to be taken into account when comparisons are done along the methods-axis between the quadrants in the above shown figure. 
+
+### MEM
+In a MEM, each marker is modelled as a separate effect. Hence the model has the following structure
+
+\begin{equation}
+y = Xb + Wq + e
+\end{equation}
+
+where $y$ is a vector of length $n$ of observations, $b$ is a vector of length $p$ of non-genetic effects, $q$ is a vector of length $m$ of marker effects and $e$ is a vector of length $n$ of random error terms. Because the currently used two-step approach uses Bayesian parameter estimation techniques, we do not have to specify whether effects are fixed or random, in a Bayesian setting they are all treated the same way.
+
+
+### BVM 
+In a BVM, marker effects are grouped per animal into a genomic breeding value effect $g_i$ for each animal $i$. This model has the following structure
+
+\begin{equation}
+y = Xb + Zg + e
+\end{equation}
+
+where all components are the same as in the MEM, except that $g$ is a vector of random genomic breeding values. At first sight, the vector $g$ contains all animals genotypic information. The question is how can the non-genotyped animals with phenotypic information be used as sources of additional information or can they also get a genomic breeding value? 
+
+From a modelling perspective the BVM is not different from the traditional BLUP animal model. The difference between the traditional BLUP model and its genomic counter-part becomes obvious when we set up the MME and therebye require to specify the variance-covariance matrix of the random breeding values. In the traditional BLUP animal model the variance covariance matrix between the breeding values is $A*\sigma_^2$ where $A$ corresponds to the numerator relationship matrix and $\sigma_a^2$ is the additive-genetic variance.
+
+
+
+
+## Current Status 
