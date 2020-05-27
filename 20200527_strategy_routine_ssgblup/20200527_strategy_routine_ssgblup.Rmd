@@ -1,0 +1,195 @@
+---
+title: "Strategies For GBLUP Routine Evaluation"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output:
+  bookdown::tufte_handout2:
+    citation_package: natbib
+    latex_engine: xelatex
+    toc: false
+  bookdown::tufte_html2: default
+  bookdown::tufte_book2:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+# Disclaimer
+Strategies for implementing a routine evaluation using single-step GBLUP is developed.
+
+
+# Background
+Single step GBLUP (ssGBLUP) allows for the direct estimation of genomic optimized breeding values (GOBV) in one step. Hence, estimation of marker effects are no longer needed to get to GOBV. Compared to the multi-step procedure to get to GOBV, the computational requirements of single step procedures are higher. Hence it is important to evaluate different implementation strategies for single step GBLUP. In what follows a few ideas for strategies are developed.
+
+
+# Marker Effects
+Marker effects can be computed based on the GOBV values obtained from a ssGBLUP analysis^[This is still not clear to me how this works, hence need to search for references - maybe the papers from D. Habier].
+
+
+# Genomic Optimized Breeding Values
+GOBVs for young animals can be computed based on the genomic relationship matrix and based on GOBV's of older animals^[Suisag calls these reference animals]. The approach is described in Gondro2013 in chapter 13, section 2.3 entitled "How GBLUP works" (page 321). This approach is based on the following idea. The mixed model equations for ssGBLUP can be written as
+
+\begin{equation}
+\left[
+\begin{array}{lll}
+X^TX  &  X^TZ  &  0  \\
+Z^TX  &  Z^TZ + H^{11}  &  H^{12} \\
+0     &  H^{21}         &  H^{22}
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+\hat{b} \\
+\hat{g}_1 \\
+\hat{g}_2
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+X^Ty \\
+Z^Ty \\
+0
+\end{array}
+\right]
+(\#eq:mmessgblup)
+\end{equation}
+
+where $H^{11}$ is the part of $H^{-1}$ for animals with genotypes and with phenotypic information. The portions $H^{12}$ and $H^{21}$ are relationships between animals with and without phenotypic information. $H^{22}$ represents animals without phenotypic information. The vector of predicted breeding values $\hat{g}$ is partitioned accordingly into a part $\hat{g}_1$ for animals with phenotypic observations and a part $\hat{g}_2$ with animals without phenotypic information. 
+
+Looking at the last line of the MME shown in \@ref(eq:mmessgblup), we get
+
+$$H^{21} \cdot \hat{g}_1 + H^{22} \cdot \hat{g}_2 = 0$$
+
+This can be solved for the vector $\hat{g}_2$ of GOBV of animals without phenotypes 
+
+\begin{equation}
+\hat{g}_2 = -( H^{22})^{-1} \cdot H^{21} \cdot \hat{g}_1
+(\#eq:gobvg2)
+\end{equation}
+
+As shown in equation \@ref(eq:gobvg2) the vector $\hat{g}_2$ depends on parts $H^{21}$ and $H^{22}$ of $H^{-1}$. The computation of $H^{-1}$ can be computationally expensive. 
+
+
+# Computation of $H^{-1}$
+
+Zerlegung einer Matrix $A$
+
+\begin{align} 
+\begin{bmatrix} 
+A_{11} & A_{12} \\ 
+A_{21} & A_{22} 
+\end{bmatrix} 
+&= 
+\begin{bmatrix} 
+A_{11} & A_{11}L \\ 
+L^TA_{11} & L^TA_{11}L + R
+\end{bmatrix}
+\end{align}
+
+with $L = A_{11}^{-1}A_{12}$ and $R = A_{22} − L^TA_{11}L$
+
+Somit können wir $A$ schreiben als^[Course by Fernando and Stricker 2018. Muss noch überprüft werden.]
+
+\begin{align} 
+\begin{bmatrix} 
+A_{11} & A_{12} \\ 
+A_{21} & A_{22} 
+\end{bmatrix} 
+&= 
+\begin{bmatrix} 
+I \\
+L^T
+\end{bmatrix} 
+A_{11}
+\begin{bmatrix} 
+I  &  L
+\end{bmatrix} 
++
+\begin{bmatrix} 
+0 \\
+I
+\end{bmatrix} 
+R
+\begin{bmatrix} 
+0  &  I
+\end{bmatrix} \\
+&= 
+\begin{bmatrix} 
+I    &  0 \\
+L^T  &  I
+\end{bmatrix} 
+\begin{bmatrix} 
+A_{11}    &  0 \\
+0         &  R
+\end{bmatrix} 
+\begin{bmatrix} 
+I    &  L \\
+0  &  I
+\end{bmatrix} \notag \\
+&=
+PVP^T \notag
+\end{align}
+
+
+## Inverse von $A$
+
+$$A^{-1} = (P^T)^{-1}V^{-1}P^{-1}$$
+
+\begin{align} 
+A^{-1} = 
+\begin{bmatrix} 
+A^{11} & A^{12} \\ 
+A^{21} & A^{22} 
+\end{bmatrix} 
+&= 
+\begin{bmatrix} 
+I    &  -L \\
+0  &  I
+\end{bmatrix}
+\begin{bmatrix} 
+A_{11}^{-1}    &  0 \\
+0              &  R^{-1}
+\end{bmatrix} 
+\begin{bmatrix} 
+I    &  0 \\
+-L^T  &  I
+\end{bmatrix} \\
+&=
+\begin{bmatrix} 
+I \\
+0
+\end{bmatrix} 
+A_{11}^{-1}
+\begin{bmatrix} 
+I  &  0
+\end{bmatrix} 
+\begin{bmatrix} 
+-L  \\
+I
+\end{bmatrix}
+R^{-1}
+\begin{bmatrix} 
+-L^T  &  I
+\end{bmatrix} \notag\\
+&=
+\begin{bmatrix} 
+A_{11}^{-1}  &  0 \\
+0            &  0
+\end{bmatrix} 
++
+\begin{bmatrix} 
+LR^{-1}L^T  &  -LR^{-1} \\
+-R^{-1}L    &  R^{-1}
+\end{bmatrix} \notag
+\end{align}
+
+The above shown derivation allows for a efficient procedure to compute parts of $H^{-1}$^[The procedure must be further developed and verified.]. This is also in the paper of Fernando2016 on exact computation of inverse GRM^[need to verify].
