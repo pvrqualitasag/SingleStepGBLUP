@@ -11,7 +11,7 @@ output:
   bookdown::tufte_book2:
     citation_package: natbib
     latex_engine: xelatex
-bibliography: skeleton.bib
+bibliography: "bibliography.bib"
 link-citations: yes
 ---
 
@@ -20,6 +20,8 @@ library(tufte)
 # invalidate cache when the tufte version changes
 knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
 options(htmltools.dir.version = FALSE)
+met <- rmdhelp::MendeleyExportToolR6$new(ps_this_rmd_file = ifelse(rstudioapi::isAvailable(),
+    rstudioapi::getActiveDocumentContext()$path, rprojroot::thisfile()))
 ```
 
 # Disclaimer
@@ -31,7 +33,7 @@ Single step GBLUP (ssGBLUP) allows for the direct estimation of genomic optimize
 
 
 # Marker Effects
-Marker effects can be computed based on the GOBV values obtained from a ssGBLUP analysis^[This is still not clear to me how this works, hence need to search for references - maybe the papers from D. Habier].
+Marker effects can be computed based on the GOBV values obtained from a ssGBLUP analysis. This is described in `r met$add('Liu2014')`. 
 
 
 # Genomic Optimized Breeding Values
@@ -81,9 +83,10 @@ As shown in equation \@ref(eq:gobvg2) the vector $\hat{g}_2$ depends on parts $H
 
 # Computation of $H^{-1}$
 
-Zerlegung einer Matrix $A$
+The matrix $A$ can be decomposed as
 
 \begin{align} 
+A = 
 \begin{bmatrix} 
 A_{11} & A_{12} \\ 
 A_{21} & A_{22} 
@@ -97,7 +100,7 @@ L^TA_{11} & L^TA_{11}L + R
 
 with $L = A_{11}^{-1}A_{12}$ and $R = A_{22} − L^TA_{11}L$
 
-Somit können wir $A$ schreiben als^[Course by Fernando and Stricker 2018. Muss noch überprüft werden.]
+Hence, we can write $A$ as^[Course by Fernando and Stricker 2018. Must be verified.]
 
 \begin{align} 
 \begin{bmatrix} 
@@ -140,7 +143,7 @@ PVP^T \notag
 \end{align}
 
 
-## Inverse von $A$
+## Inverse of $A$
 
 $$A^{-1} = (P^T)^{-1}V^{-1}P^{-1}$$
 
@@ -192,4 +195,31 @@ LR^{-1}L^T  &  -LR^{-1} \\
 \end{bmatrix} \notag
 \end{align}
 
-The above shown derivation allows for a efficient procedure to compute parts of $H^{-1}$^[The procedure must be further developed and verified.]. This is also in the paper of Fernando2016 on exact computation of inverse GRM^[need to verify].
+The above shown derivation allows for a efficient procedure to compute parts of $H^{-1}$^[The procedure must be further developed and verified.]. This is also in the paper of `r met$add('Fernando2016')` on exact computation of inverse GRM^[need to verify].
+
+
+## Application to $H^{-1}$
+
+From `r met$add('Legarra2014')` we get that 
+
+\begin{align} 
+H^{-1} &= A^{-1} 
++ 
+\begin{bmatrix} 
+0  &  0 \\ 
+0  &  G^{-1} - A_{22}^{-1} 
+\end{bmatrix}
+\end{align}
+
+The same paper specifies $H$ to be
+
+\begin{align} 
+H &= 
+\begin{bmatrix} 
+A_{11} - A_{12}A_{22}^{-1}A_{21} + A_{12}A_{22}^{-1}GA_{22}^{-1}A_{21}  &  A_{12}A_{22}^{-1}G \\ 
+GA_{22}^{-1}A_{21}                                                      &  G 
+\end{bmatrix}
+\end{align}
+
+
+
