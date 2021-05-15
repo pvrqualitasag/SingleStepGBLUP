@@ -1,0 +1,88 @@
+---
+title: "Two Step Marker Effect Model Versus Single Step Genomic BLUP"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output:
+  bookdown::pdf_document2: 
+  output_format: default
+bibliography: "bibliography.bib"
+biblio-style: "apalike"
+link-citations: true
+header-includes:
+- \usepackage{xcolor}
+- \usepackage{lscape}  
+- \usepackage{titling}
+- \pretitle{\vspace{-2cm} \begin{center} \includegraphics[width=\linewidth]{logo/quag_logo.png}\LARGE\\}
+- \posttitle{\end{center}}
+- \newcommand{\blandscape}{\begin{landscape}}
+- \newcommand{\elandscape}{\end{landscape}}
+- \setlength{\voffset}{-0.5cm}
+- \setlength{\headsep}{5pt}
+- \renewcommand{\contentsname}{Inhalt}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+met <- rmdhelp::MendeleyExportToolR6$new()
+# setting the current rmd-file
+met$set_this_rmd_file(ps_this_rmd_file = ifelse(rstudioapi::isAvailable(),
+                              rstudioapi::getActiveDocumentContext()$path,
+                              whereami::thisfile()))
+
+```
+
+\newpage
+
+# Abbreviations
+
+
+# Context
+
+
+# Traits
+
+
+# Data
+
+## Data Check
+
+## Pedigree
+
+## Data Reduction
+
+
+# Model
+
+
+# Variance Components Estimation
+
+
+# Prediction of Breeding Values
+
+
+# Display of Predicted Breeding Values
+
+
+# Results
+
+## Size of Dataset
+
+## Culling Frequencies
+
+## Heritabilities
+
+## Predicted Breeding Values
+
+
+# Discussion
+
+
+# Recommendation
+
+
+# Proposed Follow-Up Projects 
+
+
+# References
+
+
