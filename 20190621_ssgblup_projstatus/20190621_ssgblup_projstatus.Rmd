@@ -1,0 +1,119 @@
+---
+title: "Single Step Genomic BLUP"
+subtitle: "Current Project Status"
+author: "Peter von Rohr"
+date: "2019-06-21"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: bibliography.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+# Mendeley Reference Manager setup
+mrmt <- rmdhelp::MendeleyExportToolR6$new()
+mrmt$set_this_rmd_file(ps_this_rmd_file = ifelse(rstudioapi::isAvailable(),
+                                                 rstudioapi::getSourceEditorContext()$path,
+                                                 rprojroot::thisfile()))
+```
+
+# Ziel
+Das bestehende Zwei-Schritt-Verfahren (two-step) für die Schätzung genomischer Zuchtwerte soll mit einem Ein-Schritt-Verfahren (single-step) basierend auf einem genomischen BLUP-Ansatz (SSGBLUP) verglichen^[Der Vergleich wird über zwei Dimesionen geführt werden. Einerseits werden die unterschiedlichen Methoden verglichen. In einer zweiten Dimension soll der Einfluss des Einbezugs von internationalen Informationen untersucht werden.] werden.
+
+
+# Status
+Drei mögliche Ansätze für die Berücksichtigung internationaler Information in einer nationalen `Single Step GBLUP` (ssGBLUP) Auswertung wurden identifiziert.
+
+1. **Mehrmerkmalsverfahren**: Internationale Informationen werden als zusätzliche Merkmale in einem Mehrmerkmalsmodell ausgewertet
+2. **Modifizierung der MME**: `r mrmt$add("Vandenplas2017")` haben gezeigt, wie die Mischmodellgleichungen (MME) angepasst werden müssen, damit die internationale Information korrekt berücksichtigt wird.
+3. **Ansatz von Garrick und Fernando**: In `r mrmt$add("Garrick2018")` wird eine alternative Methode basierend auf einem Bayes'schen Updating-Schema gezeigt.
+
+Ein wichtiges Kriterium bei der Auswahl des verwendeten Verfahrens ist sicher deren Umsetzung mit den bereits verwendeten Softwareprogrammen. Da mittlerweilen die grosse Mehrzahl der Auswertungen mit Mix99 gemacht werden, muss auch eine allfällige  Single Step Auswertung mit Mix99 umgesetzt werden können.
+
+## Mehrmerkmalsverfahren
+Die Modellierung der internationalen Informationen als zusätzliche Merkmale kann mit den bestehenden Programmen
+
+## Modifizierung der MME
+
+
+## Ansatz von Garrick und Fernando
+
+# Hintergrund
+Wie in `r mrmt$add("Edel2019")` erwähnt, ist die Lernstichprobe aufgrund von Stieren nur noch bedingt ausbaubar. Es werden schon alle Stiere genotypisiert. Die Anzahl der Jungstiere ist rückläufig und die Jungstiere sind schon vorselektiert. Dies führt zu einer Überalterung der Lernstichprobe und somit zu einer Entfernung der Lernstichprobe von der aktuellen Population. Als Ausweg für dieses Problem wird das Hinzufügen von Kühen zur Lernstichprobe vorgeschlagen. In einer Simulationsstudie von `r mrmt$add("Plieschke2018")` wurden die Ergänzung der Lernstichprobe durch Genotypen von weiblichen Tieren in verschiedenen Szenarien untersucht. Alternative zur Ergänzung der Lernstichprobe durch Genotypen von weiblichen Tieren, ist auch eine Umstellung auf ein Ein-Schritt-Verfahren denkbar. Im Artikel von `r mrmt$add("Schwarzenbacher2019a")` wurden die beiden Verfahren (Ein- und Zwei-Schritt) einander gegenübergestellt. Bei der Berücksichtigung von weiblichen Tieren als Kandidaten in der Lernstichprobe gilt es zu beachten, dass diese eine repräsentative Stichprobe aus der Population bilden^[Bei nur wenigen genotypisierten Kühen ist davon auszugehen, dass es sich um selektiv ausgewählte Tiere handelt. Diese Vorselektion führt zu einer Verzerrung der resultierenden Schätzwerte.].
+
+
+## Genomische Zuchtwertschätzung
+Die konventionelle Zuchtwertschätzung (ZWS) über das BLUP-Tiermodell ermöglicht die Abschätzung der genetischen Veranlagung eines Tieres anhand eigener Leistungen bzw. der Leistungen von verwandten Tieren. 
+
+
+## Zwei-Schrittverfahren
+Genotypisierte Tiere, welche nicht in der Lernstichprobe sind, werden als **Kandidaten**^[In der Regel sind das Kälber, es können aber auch Kühe sein mit mehreren abgeschlossenen Laktationen. ] bezeichnet. In Abhängigkeit der in der Auswertung der Lernstichprobe verwendeten Modellparametrisierung^[Entweder Marker-Effekt Modell oder Zuchtwert-Modell] errechnen sich im Fall eines verwendeten Marker-Effekt Modells die Genomzuchtwerte eines Kandidaten als Summen der entsprechenden geschätzten Markereffekte. Leistungsinformationen von Kandidaten tragen nur dann etwas zur Schätzung in der Lernstichprobe bei, falls diese über deregressierte Zuchtwerte berücksichtigt werden. Genomische Zuchtwerte von verschiedenen Kandidaten beeinflussen sich nicht. 
+
+Das Zwei-Schritt Verfahren zur Schätzung von genomischen Zuchtwerten hat die folgenden methodischen Schwachstellen
+
+* **Keine Berücksichtigung der genomischen Vorselektion**: Aus der Genomik gibt es keinen Informationübertrag, somit geht die traditionelle ZWS davon aus, dass genomische Jungvererber zufällige Stichproben ihrer Eltern sind. 
+* **Kein Rückfluss von Information auf nicht genotypisierte Tiere**: SNP-Genotypen von Kälber enthalten Informationen zu den Genotypen der nicht-typisierten Mütter. Diese Information könnte eingesetzt werden für ein Prozess, welcher als **Genotypen-Imputation** bezeichnet wird. Diese Information wird aber im aktuellen Zwei-Schritt-Verfahren nicht berücksichtigt.
+
+
+## Lektionen aus 10 Jahren Genomik
+In den grossen Milchrinderpopulationen liegt die Anzahl der weltweit typisierten Tiere bei mehr als $10^6$. Diese Datensätze erlauben eine neuartige Ansicht auf das genetische Fundament von quantitativen Merkmalen. Diese Resultate sind für die zukünftige Entwicklung der genomischen ZWS wichtig. Die folgenden Punkte ergeben eine Zusammenfassung der bis anhin gewonnenen Einsichten.
+
+1. **Keine wichtigen Genvarianten** - Für faste alle züchterisch interessanten Merkmale dürften tausende Genvarianten für die Merkmalsausprägung wichtig sein. In vielen Merkmalen können einzelne Hauptgene vorhanden sein. Diese erklären aber selten mehr als $5 - 10\%$ der genetischen Variation.
+
+2. **Sehr viele SNPs bringen keine Verbesserung** - steht im Zusammenhang mit den weitgehend fehlenden Hauptgenen. Vereinfacht gesagt, ist es nicht wichtig eine Genvariante genau zu lokalisieren, wenn diese nur $.01\%$ der genetischen Variation erklärt. 
+
+3. **Teuer aber effektiv: Genotypen und Phänotypen in grosser Zahl** - Bei Merkmalen mit $h^2 = .4$ kann durch die Typisierung von bis zu $100$ Töchtern pro GJV (genomischer Jungvererber) über mehrere Stierjahrgänge eine Sicherheit der goZW von $80\%$ erreicht werden (`r mrmt$add("Plieschke2016")`). 
+
+
+# Single Step ZWS^[wird im Paper als Wiedervereinigung bezeichnet]
+Im Jahr 2009 schlugen `r mrmt$add("Legarra2009")` und `r mrmt$add("Misztal2009")` die Zusammenführung der konventionellen und der genomischen Zuchtwertschätzung zu einer Analyse vor. In diesem Ansatz wird die genomische Verwandtschaft nicht nur für die genotypisierten sondern für alle Tiere in der Zuchtwertschätzung berücksichtigt. Dies wird durch einen Informationsübertrag erreicht, bei dem beobachtete Genotypen und Abstammungsinformationen miteinander kombiniert werden. Dabei werden mit einer bestimmten Genauigkeit Genotypen, ausgehend von den genotypisierten Tieren, ins Pedigree hineingerechnet. Dieser Prozess wird als **Genotypenimputation** bezeichnet. Dadurch entfällt die Notwendigkeit, genomische Zuchtwerte und konventionelle Zuchtwerte nachträglich zu kombinieren.
+
+## Berücksichtigung von Internationaler Information
+Standardmässig kann ssGBLUP keine multi-nationale Information berücksichtigen. Das heisst bei Tieren, welche importiert wurden, oder, welche über Sperma, Eizellen oder Embryo-Importen Nachkommen in einer nationalen Population haben, werden die externen^[Der Begriff `extern` bedeutet hier extern im Bezug auf die nationale Auswertung. Im Paper wird diese Information mit multi-nationaler Information bezeichnet.] Informationen^[Unter der Annahme, dass Pedigree über ITB-MACE und Genotypen ausgetauscht werden, handelt es sich hierbei vor allem um phänotypische Beobachtungen.] in der nationalen Auswertung nicht berücksichtigt. Somit braucht ein nationales Zuchtprogramm einer Population mit einem hohen Anteil an internationalem Tieraustausch eine Methode, mit der die externe Information berücksichtigt werden kann. Sonst kann es zu Verzerrungen bei den geschätzten Zuchtwerten führen. Eine solche Methode müsste aber berücksichtigen, dass unter Umständen nationale Daten für die Schätzung von externen Informationen verwendet wurden. Die zu vermeidende doppelte Berücksichtigung kann über  die doppelte Verwendung von gewissen Tierrecords oder über die doppelte Verwendung von über verwandte Tiere korrelierte Daten entstehen. 
+
+## Methoden
+Basieren auf `r mrmt$add("Vandenplas2017")` folgt eine Beschreibung der folgenden Punkte
+
+1. Standard ssGBLUP
+2. Integration von multi-nationaler ssGBLUP Information in eine nationale ssGBLUP Auswertung
+3. Korrekturen um doppelte Berücksichtigung von Daten zu vermeiden
+
+
+## Standard ssGBLUP
+Für eine univariate Auswertung kann das folgende gemischte lineare Modell für ssGBlUP verwendet werden.
+
+$$y = Xb + Za + e$$
+
+Dabei steht $y$ für den Vektor der Beobachtungen, $b$ für den Vektor der fixen Effekte, $a$ für den Vektor der zufälligen additiven Effekte und $e$ für den Vektor der zufälligen Residuen. Die Matrizen X und Z sind Designmatrizen, welche die zugehörigen Effekte zu den Beobachtungen verknüpfen.
+
+Im Kontext von ssGBLUP wird angenommen, dass die zufälligen Effekte multivariate normal verteilt sind mit 
+
+$$E\left[\begin{array}{c} y \\ a \\ e \end{array}\right] = \left[\begin{array}{c} Xb \\ 0 \\ 0 \end{array}\right]$$
+
+und
+
+$$var\left[\begin{array}{c} y \\ a \\ e \end{array}\right] = \left[\begin{array}{ccc}  V  &  ZH  &  0\\ HZ^T  &  H  &  0 \\  0  &  0  &  R \end{array}\right]$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+

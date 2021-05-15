@@ -1,0 +1,48 @@
+---
+title: "Reliability and Genetic Additive Variance"
+subtitle: "Dependencies"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+s_bib_file <- 'skeleton.bib'
+if (!fs::file_exists(s_bib_file)) fs::file_create(path = s_bib_file)
+```
+
+
+# Disclaimer
+The relationship between the genetic additive variance, the variance of predicted breeding values and the reliability of predicted breeding values is described. Breeding values for a given trait are predicted using BLUP. 
+
+
+# Notation
+True breeding values for a given livestock population with $q$ animals are assumed to be stored in a vector of length $q$ called $u$. The variance-covariance matrix of $u$ is called $G = var(u)$. The predicted breeding values are given in a vector $\hat{u}$ which has also length $q$. The variance-covariance matrix of the predicted breeding values is $C = var(\hat{u})$. The prediction error variance (PEV) for the predicted breeding values is given by $PEV = var(u - \hat{u})$. For a single animal $i$, the reliability $B_i$ of the predicted breeding value ($\hat{u}_i$) is measured by the squared correlation $r_{u_i,\hat{u}_i}^2$ between true and predicted breeding values.
+
+
+# Background
+Breeding values predicted by BLUP show the property that the covariance between true and predicted breeding values is equal to the variance of the predicted breeding values. Based on our notation, this means
+
+$$cov(u,\hat{u}) = var(\hat{u}) = C$$
+Using this property in the formula for $B_i$ leads to 
+
+$$B_i = r_{u_i,\hat{u}_i}^2 = \frac{cov(u_i,\hat{u}_i)^2}{var(u_i) var(\hat{u}_i)} =  \frac{var(\hat{u}_i)}{var(u_i)}$$
+
+With that an estimate for the genetic additive variance could be obtained from 
+
+$$var(u) = \frac{var(\hat{u})^*}{B^*}$$
+where $var(\hat{u})^*$ corresponds to the empirical variance of the predicted breeding values and $B^*$ is an average reliability value. Here it is important to take the $B^*$ between 0 and 1 and not on the percentage scale.
+
