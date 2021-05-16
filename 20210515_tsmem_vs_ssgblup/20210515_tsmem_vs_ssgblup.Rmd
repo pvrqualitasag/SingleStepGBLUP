@@ -18,7 +18,7 @@ header-includes:
 - \newcommand{\elandscape}{\end{landscape}}
 - \setlength{\voffset}{-0.5cm}
 - \setlength{\headsep}{5pt}
-- \renewcommand{\contentsname}{Inhalt}
+- \renewcommand{\contentsname}{Content}
 ---
 
 ```{r setup, include=FALSE}
@@ -37,50 +37,18 @@ met$set_this_rmd_file(ps_this_rmd_file = ifelse(rstudioapi::isAvailable(),
 
 
 # Context
+Genetic breeding values can be predicted by one of the following to strategies
+
+1. Two-Step Marker Effect Model (TSMEM)
+2. Single-Step Genomic BLUP (SSGBLUP). 
+
+In what follows both approaches are described and the two strategies are compared with respect to a planned migration from 1 to 2. 
 
 
-# Traits
+# Two-Step Marker Effect Model
 
 
-# Data
-
-## Data Check
-
-## Pedigree
-
-## Data Reduction
-
-
-# Model
-
-
-# Variance Components Estimation
-
-
-# Prediction of Breeding Values
-
-
-# Display of Predicted Breeding Values
-
-
-# Results
-
-## Size of Dataset
-
-## Culling Frequencies
-
-## Heritabilities
-
-## Predicted Breeding Values
-
-
-# Discussion
-
-
-# Recommendation
-
-
-# Proposed Follow-Up Projects 
+# Single-Step Genomic BLUP
 
 
 # References
