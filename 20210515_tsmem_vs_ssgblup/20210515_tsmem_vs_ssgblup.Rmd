@@ -42,11 +42,18 @@ Genetic breeding values can be predicted by one of the following to strategies
 1. Two-Step Marker Effect Model (TSMEM)
 2. Single-Step Genomic BLUP (SSGBLUP). 
 
-In what follows both approaches are described and the two strategies are compared with respect to a planned migration from 1 to 2. 
+The paper by `r met$add("Fernando2014")` gives a good overview over the two different strategies. In what follows both approaches are described and the two strategies are compared with respect to a planned migration from 1 to 2. 
 
 
 # Two-Step Marker Effect Model
+In their seminal paper `r met$add("Meuwissen2001")` proposed three different marker effect models (MEM) as multiple regression models. These models can all be described by the following formula. 
 
+\begin{equation}
+y = Xb + Ta + e
+(\#eq:mem)
+\end{equation}
+
+where $y$ is a vector of phenotypic observations or de-regressed phenotypes. 
 
 # Single-Step Genomic BLUP
 
