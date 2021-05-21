@@ -36,7 +36,7 @@ The above quantity $M$ is minimized by choosing $\pi = E(y)$.
 
 ## Conditional Expectation
 Let us assume that $y$ is statistically related to a different random variable $x$ which was already observed. Furthermore, we assume that we know the joint density $f(x, y)$ of $x$ and $y$. Then the minimum-mean-square-error predictor of $y$ given $x$ is given by the conditional expectation $E(y|x)$
-
+<!--
 \begin{equation}
 E(y|x) = \int_y y * f(y|x)\ dy = \int_y y * \frac{f(x, y)}{f(x)}\ dy
 (\#eq:cond-exp)
@@ -46,14 +46,19 @@ with $$f(x) = \int_y f(x, y)\ dy$$ is the marignal density of $x$.
 
 The following proposition shows a propertiy of the conditional expectation. 
 
+
 ```{proposition}
 Let $\hat{y} = \hat{y}(x) = E(y|x)$ be the conditional expectation of $y$ given $x$. Then $E\left[(y - \hat{y})^2 \right] \le E\left[ (y - \pi)^2\right]$ where $\pi = \pi(x)$ is any other function of $x$.
 ```
 
+
 ```{proof}
+Consider
+
+$$
+E \{(y - \pi)^2 \}  =  E \left[\{(y-\hat{y})+(\hat{y} - \pi) \}^2 \right]
+$$
 
 ```
-
-
-
+-->
 

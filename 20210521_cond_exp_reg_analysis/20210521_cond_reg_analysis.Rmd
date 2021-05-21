@@ -1,0 +1,141 @@
+---
+title: "Conditional Expectation and Regression Analysis"
+subtitle: "A first protocol of understanding"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output:
+  bookdown::tufte_handout2:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+# Disclaimer
+The relationship between conditional expectation and regression analysis is summarised. The main resource was https://www.le.ac.uk/users/dsgp1/COURSES/MESOMET/ECMETXT/01mesmet.pdf. 
+
+
+# Elementary Regression Analysis
+This chapter provides a wide variety of approaches for parameter estimation ranging from least squares to maximum likelihood. 
+
+
+## General Expectation
+Let $y$ be a continuous random variable with density $f(y)$^[A cleaner notation would be to denote the random variable by $\mathcal{Y}$ and the realised values by $y$. Then the density would be $f_{\mathcal{Y}}(y)$. But for now, we stick to the same notation as found in the above mentioned resource.]. If $y$ is to be predicted without any further information, this can be done by its expected value $E(y)$^[A more general definition corresponds to $E(g(y)) = \int_y g(y) * f(y)\ dy$ for any function $g(y)$, provided that the integral is finite.] given by 
+
+$$E(y) = \int_y y * f(y)\ dy$$
+
+The expected value ($E(y)$) is the minimum-mean-square-error (mmse) predictor. If $\pi$ is an arbitrary predictor, mean square error $M$ is 
+
+\begin{align}
+M  &=  \int_y (y - \pi)^2 f(y)\ dy \notag \\
+   &=  E\{(y - \pi)^2 \} \notag \\
+   &=  E(y^2) - 2\pi E(y) + \pi^2
+(\#eq:mmse)   
+\end{align}
+
+The above quantity $M$ is minimized by choosing $\pi = E(y)$. 
+
+## Conditional Expectation
+Let us assume that $y$ is statistically related to a different random variable $x$ which was already observed. Furthermore, we assume that we know the joint density $f(x, y)$ of $x$ and $y$. Then the minimum-mean-square-error predictor of $y$ given $x$ is given by the conditional expectation $E(y|x)$
+
+\begin{equation}
+E(y|x) = \int_y y * f(y|x)\ dy = \int_y y * \frac{f(x, y)}{f(x)}\ dy
+(\#eq:cond-exp)
+\end{equation}
+
+where $$f(x) = \int_y f(x, y)\ dy$$ is the marignal density of $x$. 
+
+The following proposition shows a propertiy of the conditional expectation. 
+
+
+```{proposition}
+Let $\hat{y} = \hat{y}(x) = E(y|x)$ be the conditional expectation of $y$ given $x$. Then $E\left[(y - \hat{y})^2 \right] \le E\left[ (y - \pi)^2\right]$ where $\pi = \pi(x)$ is any other function of $x$.
+```
+
+```{proof}
+Consider
+
+\begin{align}
+E \{(y - \pi)^2 \}  &=  E \left[\{(y-\hat{y})+(\hat{y} - \pi) \}^2 \right] \notag \\
+                    &=  E \{(y-\hat{y})^2 \} + 2E \{(y-\hat{y})(\hat{y} - \pi) \} + E \{(\hat{y} - \pi) \}^2
+\end{align}
+
+The cross-term $E \{(y-\hat{y})(\hat{y} - \pi) \}$ is
+
+\begin{align}
+E \{(y-\hat{y})(\hat{y} - \pi) \}  &=  \int_x \int_y (y-\hat{y})(\hat{y} - \pi) f(x, y)\ \partial y \ \partial x  \notag \\
+  &=  \int_x \left\{ \int_y (y-\hat{y}) f(y|x) \ \partial y \right\}  (\hat{y} - \pi) f(x) \ \partial x \notag \\
+  &=  \int_x \left\{ \int_y y f(y|x) \ \partial y - \hat{y} * \int_y f(y|x) \ \partial y \right\} (\hat{y} - \pi) f(x) \ \partial x \notag \\
+  &=  \int_x \left\{ \hat{y} - \hat{y} * 1 \right\} (\hat{y} - \pi) f(x) \ \partial x \notag \\
+  &=  0 
+\end{align}
+
+The second equality depends on the factorisation of $f(x, y) = f(y|x)f(x)$. The final equality uses the fact that 
+
+$$
+\int_y (y-\hat{y}) f(y|x) \ \partial y = \int_y y f(y|x) \partial y - \hat{y} \int_y f(y|x) \partial y = \hat{y} - \hat{y} * 1 = 0
+$$  
+
+using the definition $\hat{y} = E(y|x) = \int_y y f(y|x) \partial y$ and $\int_y f(y|x) \partial y = 1$, where the later corresponds to the integration of a conditional density over the complete range of a random variable. This last equality can also be seen via 
+
+$$
+  \int_y f(y|x) \partial y = \int_y \frac{f(x, y)}{f(x)} \partial y 
+= \frac{1}{f(x)} \int_y f(x, y) \partial y = \frac{1}{f(x)} f(x) = 1$$
+  
+Collecting all these facts, we can go back to the original statement and conclude that 
+
+$$
+E \{(y - \pi)^2 \} = E \{(y-\hat{y})^2 \} + E \{(\hat{y} - \pi) \}^2 \ge E \{(y-\hat{y})^2 \}  
+$$
+```
+
+
+# Properties of Conditial Expectations and Relation to Regression
+The definition of the conditional expectation ($\hat{y} = E(y|x)$) implies for the joint expectation over $x$ and $y$  
+
+\begin{align}
+E(xy)  &=  \int_x \int_y xy\ f(x, y)\ \partial y \partial x \notag \\
+       &=  \int_x x \left\{ \int_y y\ f(y|x)\ \partial y \right\}\ f(x) \ \partial x \notag \\
+       &=  \int_x x \left\{ \hat{y} \right\}\ f(x) \ \partial x \notag \\
+       &=  \hat{y} \int_x x f(x) \ \partial x \notag \\
+       &=   \hat{y} E(x)\notag \\
+       &=  E(x\hat{y})
+(\#eq:joint-exp)       
+\end{align}
+
+Re-writing equation \@ref(eq:joint-exp) as 
+
+\begin{align}
+E(xy) - E(x\hat{y}) &= E(xy - x\hat{y}) = E(x(y - \hat{y})) = 0
+\end{align}
+
+This can be seen as an orthogonality property which means that the error $y - \hat{y}$ is orthogonal or uncorrelated to $x$. 
+
+If the joint distribution of $x$ and $y$ is a multivariate normal distribution, then an expression for the function $\hat{y} = E(y|x)$. In the case of a normal distribution, the conditional expectation of $y$ given $x$ can be written as a linear function of $x$. 
+
+\begin{equation}
+E(y|x) = \alpha + \beta x
+(\#eq:exp-lin-fun-x)
+\end{equation}
+
+The equation in \@ref(eq:exp-lin-fun-x) is described as linear regression which will be explained later. The aim is to find expressions for $\alpha$ and $\beta$ in terms of the first and the second order moments of the joint density $f(x,y)$. That is to say, $\alpha$ and $\beta$ are to be expressed in terms of expectations $E(x)$,  $E(y)$, the variances $V(x)$, $V(y)$ and covariance $C(x,y)$.  
+
+We start with equation \@ref(eq:exp-lin-fun-x) multiply both sides with $f(x)$ and integrate both sides with respect to $x$
+
+\begin{align}
+\int_x E(y|x) f(x) \partial x  &=  \int_x (\alpha + \beta x) f(x) \partial x \notag \\
+\int_x \left\{ \int_y y f(y | x) \ \partial y \right\} f(x) \partial x  &= 
+\int_x \alpha  f(x) \partial x + \int_x \beta x f(x) \partial x 
+(\#eq:exp-lin-fun-x-int)
+\end{align}

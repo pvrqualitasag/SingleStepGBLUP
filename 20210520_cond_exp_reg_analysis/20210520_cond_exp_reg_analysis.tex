@@ -1,0 +1,117 @@
+\documentclass[]{tufte-handout}
+
+% ams
+\usepackage{amssymb,amsmath}
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \makeatletter
+  \@ifpackageloaded{fontspec}{}{\usepackage{fontspec}}
+  \makeatother
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \makeatletter
+  \@ifpackageloaded{soul}{
+     \renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+     \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+   }{}
+  \makeatother
+
+\fi
+
+% graphix
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+
+% booktabs
+\usepackage{booktabs}
+
+% url
+\usepackage{url}
+
+% hyperref
+\usepackage{hyperref}
+
+% units.
+\usepackage{units}
+
+
+\setcounter{secnumdepth}{2}
+
+% citations
+
+% pandoc syntax highlighting
+
+% longtable
+\usepackage{longtable,booktabs}
+
+% multiplecol
+\usepackage{multicol}
+
+% strikeout
+\usepackage[normalem]{ulem}
+
+% morefloats
+\usepackage{morefloats}
+
+
+% tightlist macro required by pandoc >= 1.14
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% title / author / date
+\title{Conditional Expectation and Regression Analysis}
+\author{Peter von Rohr}
+\date{2021-05-21}
+
+
+\begin{document}
+
+\maketitle
+
+
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+
+\hypertarget{disclaimer}{%
+\section{Disclaimer}\label{disclaimer}}
+
+The relationship between conditional expectation and regression analysis is summarised. The main resource was \url{https://www.le.ac.uk/users/dsgp1/COURSES/MESOMET/ECMETXT/01mesmet.pdf}.
+
+\hypertarget{elementary-regression-analysis}{%
+\section{Elementary Regression Analysis}\label{elementary-regression-analysis}}
+
+This chapter provides a wide variety of approaches for parameter estimation ranging from least squares to maximum likelihood.
+
+\hypertarget{general-expectation}{%
+\subsection{General Expectation}\label{general-expectation}}
+
+Let \(y\) be a continuous random variable with density \(f(y)\)\footnote{A cleaner notation would be to denote the random variable by \(\mathcal{Y}\) and the realised values by \(y\). Then the density would be \(f_{\mathcal{Y}}(y)\). But for now, we stick to the same notation as found in the above mentioned resource.}. If \(y\) is to be predicted without any further information, this can be done by its expected value \(E(y)\)\footnote{A more general definition corresponds to \(E(g(y)) = \int_y g(y) * f(y)\ dy\) for any function \(g(y)\), provided that the integral is finite.} given by
+
+\[E(y) = \int_y y * f(y)\ dy\]
+
+The expected value (\(E(y)\)) is the minimum-mean-square-error (mmse) predictor. If \(\pi\) is an arbitrary predictor, mean square error \(M\) is
+
+\begin{align}
+M  &=  \int_y (y - \pi)^2 f(y)\ dy \notag \\
+   &=  E\{(y - \pi)^2 \} \notag \\
+   &=  E(y^2) - 2\pi E(y) + \pi^2
+\label{eq:mmse}   
+\end{align}
+
+The above quantity \(M\) is minimized by choosing \(\pi = E(y)\).
+
+\hypertarget{conditional-expectation}{%
+\subsection{Conditional Expectation}\label{conditional-expectation}}
+
+Let us assume that \(y\) is statistically related to a different random variable \(x\) which was already observed. Furthermore, we assume that we know the joint density \(f(x, y)\) of \(x\) and \(y\). Then the minimum-mean-square-error predictor of \(y\) given \(x\) is given by the conditional expectation \(E(y|x)\)
+
+
+
+\end{document}
