@@ -1,0 +1,119 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Disclaimer
+Tests and experiments with `rsympy`
+
+
+# Installation
+
+```{r}
+pkg <- "rSymPy"
+if (!is.element(pkg, installed.packages()))
+    install.packages(pkg, dependencies = TRUE)
+```
+
+
+# Getting Started 
+From http://www.di.fc.ul.pt/~jpn/r/symbolic/
+
+```{r}
+library(rSymPy)  
+```
+
+According to https://stackoverflow.com/questions/35419547/error-while-using-rsympy, the jvm must be started manually with 
+
+```{r}
+sympyStart()
+```
+
+
+## Arithmetic Operation
+Simple symbolic addition
+
+```{r}
+x <- Var("x")
+x+x
+```
+
+More arithmetic
+
+```{r}
+y <- Var("x**3")
+x/y
+```
+
+```{r}
+z <- sympy("2.5*x**2")
+z + y
+```
+
+Exact Number
+
+```{r}
+sympy("sqrt(8)")
+```
+
+Float
+
+```{r}
+sympy(sqrt(8))
+```
+
+or
+
+```{r}
+sympy("sqrt(8).evalf()")
+```
+
+
+# Solving equations
+
+```{r}
+x <- Var("x")
+y <- Var("y")
+sympy("f = (1-x)**2 + 100 * (y - x**2)**2")
+```
+
+Take the derivative
+
+
+```{r}
+g <- sympy("diff(f, (x, y))")
+g
+```
+
+Solve
+
+```{r}
+sympy("solve(g, (x,y))")
+```
+
+Check the Hessian
+
+
+
+# Integration
+
+```{r}
+sympy("integrate(exp(-x))")
+```
+
+```{r}
+sympy("integrate(exp(-x*y),x)") 
+```
+
+```{r}
+sympy("integrate(exp(-x), (x, 0, oo))")
+```
+
+
+Try example from Sorensen 2002
+
+```{r}
+
+sympy("integrate((x * exp(-x**2/2)), (x, 0, oo))")
+```
+
