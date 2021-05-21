@@ -1,0 +1,59 @@
+---
+title: "Conditional Expectation and Regression Analysis"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output:
+  bookdown::tufte_handout2: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Disclaimer
+The relationship between conditional expectation and regression analysis is summarised. The main resource was https://www.le.ac.uk/users/dsgp1/COURSES/MESOMET/ECMETXT/01mesmet.pdf. 
+
+
+# Elementary Regression Analysis
+This chapter provides a wide variety of approaches for parameter estimation ranging from least squares to maximum likelihood. 
+
+
+## General Expectation
+Let $y$ be a continuous random variable with density $f(y)$^[A cleaner notation would be to denote the random variable by $\mathcal{Y}$ and the realised values by $y$. Then the density would be $f_{\mathcal{Y}}(y)$. But for now, we stick to the same notation as found in the above mentioned resource.]. If $y$ is to be predicted without any further information, this can be done by its expected value $E(y)$^[A more general definition corresponds to $E(g(y)) = \int_y g(y) * f(y)\ dy$ for any function $g(y)$, provided that the integral is finite.] given by 
+
+$$E(y) = \int_y y * f(y)\ dy$$
+
+The expected value ($E(y)$) is the minimum-mean-square-error (mmse) predictor. If $\pi$ is an arbitrary predictor, mean square error $M$ is 
+
+\begin{align}
+M  &=  \int_y (y - \pi)^2 f(y)\ dy \notag \\
+   &=  E\{(y - \pi)^2 \} \notag \\
+   &=  E(y^2) - 2\pi E(y) + \pi^2
+(\#eq:mmse)   
+\end{align}
+
+The above quantity $M$ is minimized by choosing $\pi = E(y)$. 
+
+## Conditional Expectation
+Let us assume that $y$ is statistically related to a different random variable $x$ which was already observed. Furthermore, we assume that we know the joint density $f(x, y)$ of $x$ and $y$. Then the minimum-mean-square-error predictor of $y$ given $x$ is given by the conditional expectation $E(y|x)$
+
+\begin{equation}
+E(y|x) = \int_y y * f(y|x)\ dy = \int_y y * \frac{f(x, y)}{f(x)}\ dy
+(\#eq:cond-exp)
+\end{equation}
+
+with $$f(x) = \int_y f(x, y)\ dy$$ is the marignal density of $x$. 
+
+The following proposition shows a propertiy of the conditional expectation. 
+
+```{proposition}
+Let $\hat{y} = \hat{y}(x) = E(y|x)$ be the conditional expectation of $y$ given $x$. Then $E\left[(y - \hat{y})^2 \right] \le E\left[ (y - \pi)^2\right]$ where $\pi = \pi(x)$ is any other function of $x$.
+```
+
+```{proof}
+
+```
+
+
+
+
