@@ -144,6 +144,48 @@ We start with equation \@ref(eq:exp-lin-fun-x) multiply both sides with $f(x)$ a
 \begin{align}
 \int_x E(y|x) f(x) \partial x  &=  \int_x (\alpha + \beta x) f(x) \partial x \notag \\
 \int_x \left\{ \int_y y f(y | x) \ \partial y \right\} f(x) \partial x  &= 
-\int_x \alpha  f(x) \partial x + \int_x \beta x f(x) \partial x 
+\int_x \alpha  f(x) \partial x + \int_x \beta x f(x) \partial x  \notag \\
+\int_x \int_y y f(x, y)  \ \partial y  \partial x  &= 
+\alpha + \beta E(x)  \notag \\
+E(y) &= \alpha + \beta E(x)
 (\#eq:exp-lin-fun-x-int)
 \end{align}
+
+From \@ref(eq:exp-lin-fun-x-int) we get $\alpha = E(y) - \beta E(x)$. Combining \@ref(eq:exp-lin-fun-x-int) and \@ref(eq:exp-lin-fun-x) leads to
+
+\begin{equation}
+E(y|x) = E(y) + \beta \left\{x - E(x) \right\}
+\end{equation}
+
+Let us multiply both sides of \@ref(eq:exp-lin-fun-x) with $x$ and $f(x)$ and integrate with respect to $x$ provides 
+
+\begin{equation}
+E(xy) = \alpha E(x) + \beta E(x^2) 
+(\#eq:exp-xy)
+\end{equation}
+
+Multiplying \@ref(eq:exp-lin-fun-x-int) with $E(x)$ gives
+
+\begin{equation}
+E(x)E(y) = \alpha E(x) + \beta \left\{E(x)\right\}^2
+(\#eq:exp-x-exp-y)
+\end{equation}
+
+Subracting \@ref(eq:exp-x-exp-y) from \@ref(eq:exp-xy) results in 
+
+\begin{equation}
+E(xy) - E(x)E(y) = \beta \left[E(x^2) - \left\{E(x)\right\}^2 \right]
+\end{equation}
+
+which implies that
+
+\begin{align}
+\beta &= \frac{E(xy) - E(x)E(y)}{\left[E(x^2) - \left\{E(x)\right\}^2 \right]} \notag \\
+      &= \frac{E\left[(x - E(x))(y - E(y)) \right]}{E\left[(x - E(x))^2 \right]} \notag \\
+      &= \frac{C(x,y)}{V(x)}
+\end{align}
+
+
+
+
+
