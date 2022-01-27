@@ -1,0 +1,197 @@
+---
+title: Summary of LR-Method
+author: Peter von Rohr
+date: 2022-01-20
+output: 
+  bookdown::tufte_handout2:
+    citation_package: natbib
+    latex_engine: xelatex
+  bookdown::pdf_document2: default
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# hook for graphics
+# rmdhelp::show_knit_hook_call()
+knitr::knit_hooks$set(hook_convert_odg = rmdhelp::hook_convert_odg)
+# initialise mendeley reference object
+met <- rmdhelp::MendeleyExportToolR6$new()
+met$set_this_rmd_file(ps_this_rmd_file = ifelse(rstudioapi::isAvailable(),
+                              rstudioapi::getActiveDocumentContext()$path,
+                              whereami::thisfile()))
+```
+
+# Disclaimer
+Summary and explanations of the LR-Method according to `r met$add("Legarra2018")` are given.
+
+
+# Background
+Statistical models for genetic evaluations are simplifying approximations of reality. Especially with  prediction of genomic breeding values in cattle, it has become clear that GEBV of young sires were overpredicted^[This can also be seen in Swiss Dairy Cattle, especially in Brown Swiss. The problem is also that young sires with high GEBV are used a lot which is a very risky decision.]. As a result, further use of GEBV in cattle requires more extensive cross-validation (CV) and a more formal analytical framework. 
+
+Introduction of new genetic or genomic evaluations brings up questions on model choice (comparison between different models) and model quality (features of a particular model). Thus, tools are needed to rank, to understand and to quantify the behavior of models in an animal breeding context. The need for such tools has increased because with genomic selection on young animals selection decisions have a higher risk associated^[This problem is getting worse, because with many sires selected based on GEBV and with a lower number of proven bulls, the reference population cannot be updated with younger sires.].
+
+The method often used to validate genomic predictions is some form of CV. The reason CV is preferred over other statistical model evaluation techniques is that in an animal breeding context, we are not so much interested in an overall fit of the model to the complete dataset. The main interest is to assess the prediction quality for selection candidates which are in most cases young animals. 
+
+{Different CV techniques are discussed and the reason why the proposed is best is explained ...}
+
+In this paper, results from `r met$add("Reverter1994")` are used and theoretical features of semi-parametric procedures namely the LR-method are presented. These procedures consist of a series of statistics which describe the change of predictions from "old" to "new" evaluations. These statistics can be used to compute and to compare population accuracies and biases of (genomic) predictions. 
+
+This work proposes estimates of the "population" accuracy which is the correlation between true (TBV) and the predicted breeding value (EBV) across individuals in a population. Population accuracy is relevant to compare the predictive ability of models and the selection response. This work does not propose methods to predict individual accuracies^[Individual accuracies are derived from prediction error variance (PEV)] which are measures of the risk when choosing certain animals for breeding (see `r met$add("Bijma2012")`).
+
+
+# Methods: analytical developments
+The quality of evaluation methods is assessed by CV tests using successive EBV from a set of "focal" animals (a validation cohort). These "focal" animals can be the whole population or a set of animals of interest, such as genomic candidates for selection. 
+
+## Notational Convention^[This header does not exist in the paper.]
+* The term $var(\mathbf{x})$ refers to the scalar corresponding to the empirical variance of the components of one realisation of the vector $\mathbf{x}$, i.e., 
+
+$$var(\mathbf{x}) = {1 \over n}\sum_{i=1}^n x_i^2 - \left({1 \over n}\sum_{i=1}^n x_i \right)^2$$
+
+* The term $Var(\mathbf{x})$ stands for the variance-covariance matrix of elements in $\mathbf{x}$ due to random sampling.
+
+* Similar conventions are used for the covariance ($cov(\mathbf{x},\mathbf{y})$) and the correlation ($r(\mathbf{x},\mathbf{y})$).
+
+
+# Definition of population accuracy, bias and dispersion
+Let $u$ be the true breeding value (TBV) and $\hat{u}$ be the estimated breeding value (EBV) for a single animal. The classical definition of accuracy is the correlation $r(u,\hat{u})$ for one animal over conceptual sampling which is a measure of the expected magnitude of change in EBV with increasing information.
+
+Accuracies are also used to forecast genetic progress in a breeding scheme. This use applies to large unrelated populations and made sense at the time of index-based selection (as in full-sib families). However, for the joint evaluation of all animals in a population, the relevant measure is the correlation between TBV and EBV in the candidates for selection. This correlation is a property of a population and not of a single animal. Therefore this correlation is from now on termed "population __accuracy__" and is the correlation 
+
+$$r(\mathbf{u},\hat{\mathbf{u}}) = \frac{cov(\mathbf{u},\hat{\mathbf{u}})}{\sqrt{var(\mathbf{u})\ var(\hat{\mathbf{u}})}}$$
+
+across a series of animals.
+
+Accordingly, __bias__ is defined as 
+
+$$bias = \bar{\mathbf{u}} - \bar{\hat{\mathbf{u}}}$$
+
+The __dispersion__ is quantified by the regression of $\mathbf{u}$ on $\hat{\mathbf{u}}$. The slope of this regression is computed as
+
+$$b = \frac{cov(\mathbf{u}, \hat{\mathbf{u}})}{var(\hat{\mathbf{u}})}$$
+
+## Indicators of Relationship and Variance Reduction^[This header does not exist in the paper.]
+Indicators of (self-) relationship based on the relationship matrix were defined. If the relationship matrix across focal animals is $\mathbf{K}$, the authors use 
+
+$$\overline{diag(\mathbf{K})} - \bar{\mathbf{K}} = 1 + \bar{F} - 2\bar{f}$$
+
+where $F$ is the inbreeding coefficient and $f$ is the relationship between animals^[The bar operator stands for the average, hence $\bar{\mathbf{X}}$ is the average across all elements of $\mathbf{X}$.].
+
+In unselected populations $\bar{diag(\mathbf{K})} - \bar{\mathbf{K}}$ can be used as a measure of variance reduction. In populations with selection, the variance is further reduced by the Bulmer effect. This can be expressed as 
+
+$$\sigma_{u,\infty}^2 = (1-k)\ \sigma_u^2$$
+where $k$ is the reduction due to selection and $\sigma_{u,\infty}^2$ is the genetic variance at equilibrium in a population under selection. In `r met$add("Dekkers1992")` with a reference to `r met$add("cochran1951improvement")`, the term $k$ is computed as 
+
+$$k = i(i - x)$$
+where $i$ is the selection intensity and $x$ is the standardized trunction point. 
+
+
+# Statistics to test the quality of evaluation methods in brief
+Consider successive evaluations with "partial" ($p$) and "whole" ($w$) data. The corresponding EBV $\hat{\mathbf{u}}_p$ and $\hat{\mathbf{u}}_w$, respectively are based on "old" data ($p$) and on "recent" and "old" data ($w$). In what follows $\hat{\mathbf{u}}_p$ and $\hat{\mathbf{u}}_w$ have the same length and may be for a subset of focal animals or for the complete dataset. 
+
+The proposed criteria are beneficial because they do not require knowledge of
+
+1. the TBV, only EBV of successive evaluations are needed  
+2. adjustement factors to pre-correct phenotypes
+
+
+## Assuptions
+In general, the following assumptions are made
+
+* $Cov(\hat{\mathbf{u}}_w, \hat{\mathbf{u}}_p) = Var(\hat{\mathbf{u}}_p)$
+* $E(\hat{\mathbf{u}}_w) = E(\hat{\mathbf{u}}_p) = E(\hat{\mathbf{u}})$
+* $Cov(\hat{\mathbf{u}} - \hat{\mathbf{u}}_w, \hat{\mathbf{u}}_w) = Cov(\hat{\mathbf{u}} - \hat{\mathbf{u}}_p, \hat{\mathbf{u}}_p) = 0$
+
+
+## Results
+The following results are used
+
+1. the statistic^[The term "statistic" here is defined as a function of the data. Hence for any data vector $\mathbf{y}$, a vector-valued function $t(\mathbf{y})$ is a statistic. Because EBV are functions of the data, the difference between two vector with EBV is certainly a statistic.] $\mu_{wp} = \bar{\hat{\mathbf{u}}}_p - \bar{\hat{\mathbf{u}}}_w$ has an expected value of $E(\mu_{wp}) = 0$, if the evaluation is unbiased.
+2. The regression of EBV with "whole" ($w$) data on the EBV with "partial" ($p$) data is characterized by the following regression coefficient 
+
+$$b_{w,p} = \frac{cov(\hat{\mathbf{u}}_w, \hat{\mathbf{u}}_p)}{var(\hat{\mathbf{u}}_p)}$$
+
+and has expectation $E(b_{w,p}) = 1$, if there is no over/underdispersion. 
+
+3. The correlation^[applying the standard definition of correlation, yields $\rho_{p,w} = \frac{cov(\hat{\mathbf{u}}_w, \hat{\mathbf{u}}_p)}{\sqrt{var(\hat{\mathbf{u}}_p)\ var(\hat{\mathbf{u}}_w)}}$] ($\rho_{p,w}$) of EBV based on partial and whole data is a function of their respective accuracies and has expected value $E(\rho_{p,w}) \approx \frac{acc_p}{acc_w}$. 
+
+4. The covariance of EBV based on partial and on whole data is a function of the squared accuracy of the partial EBV
+
+$$\rho_{Cov_{w,p}}^2 = \frac{cov(\hat{\mathbf{u}}_w, \hat{\mathbf{u}}_p)}{\left(1+\bar{F} - 2\bar{f} \right)\ \sigma_{u, \infty}^2} 
+\text{ with } E(\rho_{Cov_{w,p}}^2) \approx acc_p^2 $$
+
+5. The slope^[computed as $b_{p,w} = \frac{cov(\hat{\mathbf{u}}_w, \hat{\mathbf{u}}_p)}{var(\hat{\mathbf{u}}_w)}$] ($b_{p,w}$) of the regression of EBV based on parital data on EBV based on whole data is a function of the ratio of the reliabilities, and hence $E(b_{p,w}) = \frac{acc_p^2}{acc_w^2}$
+
+
+# Proofs and Derivations
+{Proofs and derivations can be seen in the paper. For practical purposes, the are of lower importance.}
+
+
+# Markers considered as "new" data: pedigree BLUP and (SS) GBLUP
+The addition of marker genotypes can be viewed as "new information". Thus a way to check the increase in accuracy from adding marker data (e.g. from PBLUP to GBLUP) is the view the data with marker genotypes as the "whole" data and the data without markers as the "partial" data. Using $G$ for EBV with marker and $A$ for the EBV without marker yields
+
+$$\rho_{A,G} = \frac{(\hat{\mathbf{u}}_A - \bar{\hat{\mathbf{u}}}_A)^T(\hat{\mathbf{u}}_G - \bar{\hat{\mathbf{u}}}_G)}
+{\sqrt{(\hat{\mathbf{u}}_A - \bar{\hat{\mathbf{u}}}_A)^T(\hat{\mathbf{u}}_A - \bar{\hat{\mathbf{u}}}_A)(\hat{\mathbf{u}}_G - \bar{\hat{\mathbf{u}}}_G)^T(\hat{\mathbf{u}}_G - \bar{\hat{\mathbf{u}}}_G)}} = \frac{acc_A}{acc_G}$$
+
+Hence, the lower $\rho_{A,G}$, the higher the extra accuracy from genomic data.
+
+The procedure above uses the same phenotypes for $G$ and for $A$. 
+
+Alternatively, the increment in accuracy from "partial" to "whole" can be compared for both approaches $G$ and $A$. In this case, the following procedure is proposed.
+
+1. Compute EBV with all data using the method that is deemed to be optimal. Here it is assumed that this is GBLUP^[In the approach used by SUISAG, this is PBLUP]
+2. Choose a cutoff date and create a partial dataset by setting phenotypes after cutoff date to missing
+3. Compute GEBV based on the partial data using GBLUP
+4. For "focal" individuals (i.e., the validation cohort): compute statistics $\mu_{p,w}^{GBLUP}$ , $b_{w,p}^{GBLUP}$ , and $\rho_{p,w}^{GBLUP}$ that  
+describe respectively bias, dispersion and accuracy of EBV from GBLUP
+5. Compute PEBV based on "partial data" and using PBLUP
+6. Compute statistics $\mu_{p,w}^{PBLUP}$, $b_{w,p}^{PBLUP}$, and $\rho_{p,w}^{PBLUP}$ that describe respectively bias, dispersion and accuracy of PEBV from PBLUP
+7. The statistic $\rho_{PBLUP_p, GBLUP_p}$ quantifies the inverse of the relative increase in accuracy from PBLUP to GBLUP in the partial data
+8. The statistic $\rho_{PBLUP_w, GBLUP_w}$ quantifies the inverse of the relative increase in accuracy from PBLUP to GBLUP in the whole data.
+
+
+# Data: example using beef cattle data 
+## Animal population, genotypes and phenotypes
+The described statistics are tested in a real dataset. The dataset consists of yearling weight (YWT) for $N=2111$ animals of the Brahman breed^[A more detailed description is given in the paper.]. 
+
+
+## Procedure to generate partial datasets and cross‑validation statistics
+The data described above comprises the whole dataset. One thousand partial datasets were generated by setting randomly $50%$ of the records as missing. Animals in the dataset were all contemporaries and are not descendants of each other. Therefore there are not issues with selection. 
+
+Variance components and BLUPs of breeding values were obtained from the Qxpak5 software. All datasets were analysed using the pedigree based numerator relationship matrix and the SNP-based genomic relationship matrix.
+
+Table 2 in the paper lists the 16 computed statistics to compare EBV from partial and whole datasets. In order to highlight the impact of data partitioning, some statistics are computed separately for the animals in the whole and in the partial datasets, in the context of reference and validation animals^[Reference and validation animals are explained in Figure \@ref(fig:ref-val-sep).], respectively. This means $\rho_{w,p}^{v}$ is the correlation between the EBV obtained using the whole dataset and the EBV obtained using the parital dataset, but computed only by using the validation animals that have missing phenotypes in the partial dataset. The EBV of those animals are predicted in the partial dataset using parent average or using genomic information from relatives. 
+
+```{r ref-val-sep, echo=FALSE, hook_convert_odg=TRUE, fig_path="odg", fig.margin = TRUE, fig.cap="Reference and Validation Animals", out.width="100%"}
+#rmdhelp::use_odg_graphic(ps_path = "odg/ref-val-sep.odg")
+knitr::include_graphics(path = "odg/ref-val-sep.png")
+```
+
+
+# Implementation^[not in the paper]
+The following list of statistics (see Table \@ref(tab:tab-stat)) is a subset of what is listed in Table 2 of the paper and what is considered to be useful for a first version of a validation tool.
+
+```{r tab-stat, echo=FALSE}
+tbl_stat <- tibble::tibble(Statistic   = c("$b_{w,p}$",
+                                           "$b_{p,w}$",
+                                           "$\\rho_{w,p}$",
+                                           "$d_{w,p}$"),
+                           Description = c("Regression of whole on partial EBV",
+                                           "Regression of partial on whole EBV",
+                                           "Correlation between whole and partial EBV",
+                                           "Difference between whole and partial EBV"))
+knitr::kable(tbl_stat, escape = FALSE, caption = "List of Statistics Considered for Validation")
+```
+
+The above listed statistics are computed for reference and validation animals. The list is missing the statistic $\rho_{Cov_{w,p}}^2$ which is listed in result 4 in the Results section. 
+
+
+## Computational Issues
+Most of the statistics such as the difference between whole and partial, the regression coefficients of whole on partial and of partial on whole and the correlation coefficients between whole and partial can be computed using standard functions in R. The only required inputs are the vectors of EBV from partial and whole data. 
+
+The statistic $\rho_{Cov_{w,p}}^2$ requires the relationship matrix $K$ and the genetic variance of the selection candidates $\sigma_{u,\infty}^2$. The relationship matrix $K$ contains all animals of the focal group. Check `r met$add("Legarra2016a")` on possible ways to efficiently compute $K$. The work by `r met$add("Nilforooshan2021")` might be a further source. The genetic variance $\sigma_{u,\infty}^2$ depends the selection intensity. See `r met$add("Dekkers1992")` for more details on variance reduction.
+
+
+
+
+# References 

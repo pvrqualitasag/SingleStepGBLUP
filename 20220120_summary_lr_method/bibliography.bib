@@ -1,0 +1,113 @@
+@Article{Legarra2018,
+  abstract = {Background: Cross-validation tools are used increasingly to validate and compare genetic evaluation methods but analytical properties of cross-validation methods are rarely described. There is also a lack of cross-validation tools for complex problems such as prediction of indirect effects (e.g. maternal effects) or for breeding schemes with small progeny group sizes. Results: We derive the expected value of several quadratic forms by comparing genetic evaluations including {"}partial{"} and {"}whole{"} data. We propose statistics that compare genetic evaluations including {"}partial{"} and {"}whole{"} data based on differences in means, covariance, and correlation, and term the use of these statistics {"}method LR{"} (from linear regression). Contrary to common belief, the regression of true on estimated breeding values is (on expectation) lower than 1 for small or related validation sets, due to family structures. For validation sets that are sufficiently large, we show that these statistics yield estimators of bias, slope or dispersion, and population accuracy for estimated breeding values. Similar results hold for prediction of future phenotypes although we show that estimates of bias, slope or dispersion using prediction of future phenotypes are sensitive to incorrect heritabilities or precorrection for fixed effects. We present an example for a set of 2111 Brahman beef cattle for which, in repeated partitioning of the data into training and validation sets, there is very good agreement of statistics of method LR with prediction of future phenotypes. Conclusions: Analytical properties of cross-validation measures are presented. We present a new method named LR for cross-validation that is automatic, easy to use, and which yields the quantities of interest. The method compares predictions based on partial and whole data, which results in estimates of accuracy and biases. Prediction of observed records may yield biased results due to precorrection or use of incorrect heritabilities.},
+  annote = {Compare prediction of whole and reduced dataset to get estimates of accuracy and biases.
+
+- tools needed not only to know goodness of an evaluation but also to compare model choices and quality
+- bases on cross-validation test based on focal animals (where focal can be all population or subgroups)
+
+Accuracy: cov(EBV,TBV)/sqrt(var(EBV)*var(TBV))
+Bias:mean(TBV)-mean(EBV)
+Dispersion:slope of regression of TBV on EBV
+
+- needs large number of animals (several hundreds at least and of multiple half-sibs families},
+  author = {Andres Legarra and Antonio Reverter},
+  doi = {10.1186/s12711-018-0426-6},
+  file = {:Users/pvr/Library/Application Support/Mendeley Desktop/Downloaded/Legarra, Reverter - 2018 - Semi-parametric estimates of population accuracy and bias of predictions of breeding values and future phenot.pdf:pdf},
+  issn = {12979686},
+  journal = {Genetics Selection Evolution},
+  keywords = {Agriculture,Animal Genetics and Genomics,Evolutionary Biology},
+  month = {nov},
+  number = {1},
+  pages = {1--18},
+  pmid = {30400768},
+  publisher = {BioMed Central Ltd.},
+  title = {{Semi-parametric estimates of population accuracy and bias of predictions of breeding values and future phenotypes using the LR method}},
+  url = {https://link.springer.com/articles/10.1186/s12711-018-0426-6 https://link.springer.com/article/10.1186/s12711-018-0426-6},
+  volume = {50},
+  year = {2018},
+}
+
+@Article{Reverter1994,
+  author = {A. Reverter and B. L. Golden and R. M. Bourdon and J. S. Brinks},
+  file = {:Users/pvr/Library/Application Support/Mendeley Desktop/Downloaded/Reverter et al. - 1994 - Technical Note Detection of Bias in Genetic Predictions.pdf:pdf},
+  journal = {Journal of Animal Science},
+  pages = {34--37},
+  title = {{Technical Note: Detection of Bias in Genetic Predictions}},
+  url = {https://doi.org/10.2527/1994.72134x},
+  volume = {72},
+  year = {1994},
+}
+
+@Article{Bijma2012,
+  abstract = {The accuracy of estimated breeding values (EBVs) is an important parameter in livestock genetic improvement. It is used to calculate response to selection and to express the credibility of individual EBVs. Although it is well-known that selection reduces accuracy, this effect is not well-studied and accuracies from genetic evaluations are not adjusted for selection. This work investigates the effect of selection on accuracy of EBVs estimated using best linear unbiased predictors. Results show that accuracies in a selected population may be considerably smaller than the ordinary accuracy from genetic evaluation. Accuracy of the parent average is dramatically reduced by selection, up to a factor of three. Expressions for equilibrium accuracies in selected populations are presented and depend only on the unselected accuracy and the intensity of selection. Thus, schemes with the same unselected accuracy and intensity of selection also have the same equilibrium accuracy and response to selection. At the same unselected accuracy, therefore, schemes based on between-family information do not show greater reduction in response and accuracy because of the Bulmer effect. An example shows that benefit of genomic selection may be underestimated when the effect of selection on accuracy is ignored. Finally, this work argues that the SE of an EBV and the correlation between true and EBVs are different things, and that accuracies should not be adjusted for selection when they primarily serve to indicate the SEs of EBVs. {\textcopyright} 2012 Wageningen University.},
+  author = {P. Bijma},
+  doi = {10.1111/j.1439-0388.2012.00991.x},
+  file = {:Users/pvr/Library/Application Support/Mendeley Desktop/Downloaded/Bijma - 2012 - Accuracies of estimated breeding values from ordinary genetic evaluations do not reflect the correlation between true and.pdf:pdf},
+  issn = {09312668},
+  journal = {Journal of Animal Breeding and Genetics},
+  keywords = {Accuracy,Best linear unbiased prediction,Estimated breeding value,Genomic selection,Selection},
+  number = {5},
+  pages = {345--358},
+  pmid = {22963356},
+  title = {{Accuracies of estimated breeding values from ordinary genetic evaluations do not reflect the correlation between true and estimated breeding values in selected populations}},
+  volume = {129},
+  year = {2012},
+}
+
+@Article{Dekkers1992,
+  author = {J C M Dekkers},
+  doi = {10.1017/S0003356100020808},
+  file = {:Users/pvr/Library/Application Support/Mendeley Desktop/Downloaded/Dekkers - 1992 - Asymptotic response to selection on best linear unbiased predictors of breeding values.pdf:pdf},
+  journal = {Anim Prod.},
+  keywords = {Asymptotic selection response,BLUP EBV,best linear unbiased prediction,breeding value,genetic variance,selection responses},
+  mendeley-tags = {Asymptotic selection response,BLUP EBV},
+  pages = {351--360},
+  title = {{Asymptotic response to selection on best linear unbiased predictors of breeding values}},
+  url = {http://dx.doi.org/10.1017/S0003356100020808},
+  volume = {54},
+  year = {1992},
+}
+
+@InProceedings{cochran1951improvement,
+  author = {WILLIAM G Cochran},
+  booktitle = {Proceedings of the second Berkeley symposium on mathematical statistics and probability},
+  file = {:Users/pvr/Library/Application Support/Mendeley Desktop/Downloaded/Cochran - 1951 - Improvement by means of selection.pdf:pdf},
+  organization = {University of California Press},
+  pages = {449--470},
+  title = {{Improvement by means of selection}},
+  url = {https://digitalassets.lib.berkeley.edu/math/ucb/text/math{\_}s2{\_}article-33.pdf},
+  year = {1951},
+}
+
+@Article{Legarra2016a,
+  abstract = {Use of relationships between individuals to estimate genetic variances and heritabilities via mixed models is standard practice in human, plant and livestock genetics. Different models or information for relationships may give different estimates of genetic variances. However, comparing these estimates across different relationship models is not straightforward as the implied base populations differ between relationship models. In this work, I present a method to compare estimates of variance components across different relationship models. I suggest referring genetic variances obtained using different relationship models to the same reference population, usually a set of individuals in the population. Expected genetic variance of this population is the estimated variance component from the mixed model times a statistic, Dk, which is the average self-relationship minus the average (self- and across-) relationship. For most typical models of relationships, Dk is close to 1. However, this is not true for very deep pedigrees, for identity-by-state relationships, or for non-parametric kernels, which tend to overestimate the genetic variance and the heritability. Using mice data, I show that heritabilities from identity-by-state and kernel-based relationships are overestimated. Weighting these estimates by Dk scales them to a base comparable to genomic or pedigree relationships, avoiding wrong comparisons, for instance, {"}missing heritabilities{"}.},
+  author = {Andres Legarra},
+  doi = {10.1016/j.tpb.2015.08.005},
+  file = {:Users/pvr/Library/Application Support/Mendeley Desktop/Downloaded/Legarra - 2016 - Comparing estimates of genetic variance across different relationship models(2).pdf:pdf},
+  issn = {10960325},
+  journal = {Theoretical Population Biology},
+  keywords = {Base population,Genetic variance,Heritability,Mixed models,Relationship},
+  pages = {26--30},
+  pmid = {26341159},
+  publisher = {Elsevier Inc.},
+  title = {{Comparing estimates of genetic variance across different relationship models}},
+  url = {http://dx.doi.org/10.1016/j.tpb.2015.08.005},
+  volume = {107},
+  year = {2016},
+}
+
+@Article{Nilforooshan2021,
+  abstract = {Pedigree relationships between every pair of individuals forms the elements of the additive genetic relationship matrix (A). Calculation of A−1 does not require forming and inverting A, and it is faster and easier than the calculation of A. Although A−1 is used in best linear unbiased prediction of genetic merit, A is used in population studies and post-evaluation procedures, such as breeding programs and controlling the rate of inbreeding. Three pedigrees with 20,000 animals (20K) and different (1, 2, 4) litter sizes, and a pedigree with 180,000 animals (180K) and litter size 2 were simulated. Aiming to reduce the computation time for calculating A, new methods [Array-Tabular method, (T−1)−1 instead of T in Thompson's method, iterative updating of D in Thompson's method, and iteration by generation] were developed and compared with some existing methods. The methods were coded in the R programming language to demonstrate the algorithms, aiming for minimizing the computational time. Among 20K, computational time decreased with increasing litter size for most of the methods. Methods deriving A from A−1 were relatively slow. The other methods were either using only pedigree information or both the pedigree and inbreeding coefficients. Calculating inbreeding coefficients was extremely fast ({\textless}0.2 s for 180K). Parallel computing (15 cores) was adopted for methods that were based on solving A−1 for columns of A, as those methods allowed implicit parallelism. Optimizing the code for one of the earliest methods enabled A to be built in 13 s (faster than the 31 s for calculating A−1) for 20K and 17 min 3 s for 180K. Memory is a bottleneck for large pedigrees but attempts to reduce the memory usage increased the computational time. To reduce disk space usage, memory usage, and computational time, relationship coefficients of old animals in the pedigree can be archived and relationship coefficients for parents of the next generation can be saved in an external file for successive updates to the pedigree and the A matrix.},
+  author = {Mohammad Ali Nilforooshan and Dorian Garrick and Bevin Harris},
+  doi = {10.3389/fgene.2021.655638},
+  file = {:Users/pvr/Library/Application Support/Mendeley Desktop/Downloaded/Nilforooshan, Garrick, Harris - 2021 - Alternative Ways of Computing the Numerator Relationship Matrix.pdf:pdf},
+  issn = {16648021},
+  journal = {Frontiers in Genetics},
+  keywords = {Cholesky decomposition,conjugate gradient,inbreeding coefficient,inverse,numeric relationship matrix,parallel computing,pedigree},
+  number = {July},
+  pages = {1--11},
+  title = {{Alternative Ways of Computing the Numerator Relationship Matrix}},
+  url = {https://doi.org/10.3389/fgene.2021.655638},
+  volume = {12},
+  year = {2021},
+}

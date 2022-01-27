@@ -1,0 +1,37 @@
+---
+title: QMSim Parameter in Macedo2020
+author: pvr
+date: "`r Sys.Date()`"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Disclaimer
+
+
+# Replacement
+The text specifies a replacement of $0.08$ for the born males and of $0.45$ for the born females. In the parameter files the ratio of sires and dams replaced are given. The following tries to reproduce the replacement numbers
+
+```{r}
+nr_male <- 4500
+nr_dams <- 45000
+pmp <- 0.5   # Proportion of male progeny
+sr = 0.4     # Replacement ratio for sires 
+dr = 0.2     # Replacement ratio for dams
+
+# replacement for males born per year
+nr_males_born <- nr_dams * pmp
+nr_male_replaced <- sr * nr_male
+nr_male_replaced / nr_males_born
+```
+
+```{r}
+# replacement for females born per year
+nr_females_born <- nr_dams * (1 - pmp)
+nr_female_replaced <- dr * nr_dams
+nr_female_replaced / nr_females_born
+```
+
