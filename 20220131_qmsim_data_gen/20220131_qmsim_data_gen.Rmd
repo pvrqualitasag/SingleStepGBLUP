@@ -1,0 +1,55 @@
+---
+title: Generate Data Using QMSIM
+author: Peter von Rohr
+date: "`r Sys.Date()`"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Disclaimer
+Data generation using QMSIM is documented. The program QMSim is installed on 1-htz.
+
+
+# Input
+Input parameters are copied from Macedo 2020. The number of replicates specified in the parameter file is changed from 20 to 1. 
+
+
+# Data Simulation
+The modified parameter file is used to generate data with 
+
+```
+cd;cd qmsim/lr_method_macedo2020
+QMSim lr_method_macedo2020.prm &> lr_method_macedo2020.log
+```
+
+
+# Data Evaluation
+The generated data is evaluated using MiX99. This is first updated to the pro version using
+
+```
+ 1740  cd /qualstorzws01/data_projekte/linuxBin/
+ 1745  scp -r mix99/19.1129_pro quagadmin@1-htz.quagzws.com:/qualstorzws01/data_projekte/linuxBin/mix99
+ 1746  scp -r mix99/19.1129_pro quagadmin@2-htz.quagzws.com:/qualstorzws01/data_projekte/linuxBin/mix99
+ 1749  scp -r mix99/qualitas_tools quagadmin@1-htz.quagzws.com:/qualstorzws01/data_projekte/linuxBin/mix99
+ 1750  scp -r mix99/qualitas_tools quagadmin@2-htz.quagzws.com:/qualstorzws01/data_projekte/linuxBin/mix99
+```
+
+On the rented server the links are added
+
+```
+cd /qualstorzws01/data_projekte/linuxBin
+ln -s mix99/19.1129_pro/apax99 apax99_pro
+ln -s mix99/19.1129_pro/apax99p apax99p_pro
+ln -s mix99/19.1129_pro/exa99 exa99_pro
+ln -s mix99/19.1129_pro/imake99 imake99_pro
+ln -s mix99/19.1129_pro/mix99i mix99i_pro
+ln -s mix99/19.1129_pro/mix99p mix99p_pro
+ln -s mix99/19.1129_pro/mix99s mix99s_pro
+ln -s mix99/19.1129_pro/mpiexec99 mpiexec99_pro
+ln -s mix99/19.1129_pro/tools/partition_blocks partition_blocks_pro
+```
+
+
