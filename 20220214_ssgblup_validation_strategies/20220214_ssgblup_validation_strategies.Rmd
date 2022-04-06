@@ -1,0 +1,78 @@
+---
+title: Validation Strategies for Single Step GBLUP
+subtitle: "An implementation in R Markdown"
+author: Peter von Rohr
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: bibliography.bib
+link-citations: yes
+params:
+  os:
+    label: "Operating System"
+    value: linux
+    input: select
+    choices: [macos, linux]
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+# hook for graphics
+# rmdhelp::show_knit_hook_call()
+knitr::knit_hooks$set(hook_convert_odg = rmdhelp::hook_convert_odg)
+# check additional packages
+if (!is.element("RefManageR", installed.packages()))
+  install.packages("RefManageR", dependencies = TRUE)
+# initialise mendeley reference object
+met <- rmdhelp::MendeleyExportToolR6$new()
+if (params$os == "linux")
+  met$set_mendeley_export_dir(ps_men_export_dir = "/home/zws/data/literature/mendeley/bibtex")
+met$set_this_rmd_file(ps_this_rmd_file = ifelse(rstudioapi::isAvailable(),
+                              rstudioapi::getActiveDocumentContext()$path,
+                              whereami::thisfile()))
+```
+
+# Disclaimer
+Possible validation strategies are developed and documented
+
+
+# Background
+`r met$add("Legarra2018")` emphasize the importance of cross-validation to better estimate the population-level accuracy of GEBV. The work of `r met$add("Legarra2018")` build on a procedure that use a series of statistics which describe the change of predictions from "old" to "recent" evaluations. Estimates of "population" accuracy which is the correlation between TBV and EBV across animals in a population are proposed. Population accuracy is relevant to compare the predictive ability of models and to maximize or to predict genetic progress. The study of `r met$add("Legarra2018")` does not propose methods to estimate individual accuracies, which are a measure of the risk when choosing a particular animal for breeding.
+
+
+# Strategy
+Based on the section "Statistics to test the quality of evaluation methods in brief" of `r met$add("Legarra2018")`, the following strategy applied in the paper is extracted. This strategy is used to define a procedure for our own validation procedure.
+
+Successive evaluations with "partial" and "whole" data ($\hat{u}_p$ and $\hat{u}_w$, respectively) are considered. Those are based on "old" ($p$) and "recent $+$ old" ($w$) phenotypic data. It is important to note that $\hat{u}_p$ and $\hat{u}_w$ are vectors of the same length and may contain the predicted breeding values of a set of "focal" animals (e.g. young candidates for selection) or of the entire dataset (i.e. all the animals in the pedigree).
+
+Most statistics that are used for validation can be computed based on $\hat{u}_p$ and $\hat{u}_w$. Further parameters are the genetic variance ($\sigma_{u,\infty}^2$) which is corrected for the Bulmer effect and average values of the inbreeding coefficients and the numerator relationship matrix. 
+
+
+# Procedure
+The main statistics that are required for the validation of breeding values are based on the following components.
+
+* $\hat{u}_p$
+* $\hat{u}_w$
+* $\sigma_{u,\infty}^2$
+* $\bar{F}$ and $\bar{f}$ which are computed based on numerator relationship matrix
+
+The required input for computing a first set of validation statistics are 
+
+* $\hat{u}_p$ 
+* $\hat{u}_w$
+
+Both of these vectors have the same length and hence define the set of focal animals. 
+* 
+
+
+
+# References
